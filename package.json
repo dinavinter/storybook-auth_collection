@@ -16,7 +16,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "babel src -d dist --extensions \".js,.jsx,.ts,.tsx\" --ignore \"**/*.test.js\" --ignore \"**/*.stories.js\"",
+    "build": "babel src -d dist --extensions \".js,.jsx,.ts,.tsx\" --ignore \"**/*.test.js\" --ignore \"**/*.stories.js\" --ignore \".idea/**\"",
     "build-docs": "build-storybook --docs",
     "build-storybook": "build-storybook -s .storybook/static",
     "lint": "yarn lint:js && yarn lint:package",
