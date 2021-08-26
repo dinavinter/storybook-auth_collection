@@ -1,6 +1,6 @@
 {
   "name": "@storybook/auth-collection",
-  "version": "1.0.0-initial",
+  "version": "1.0.0-canary.9de9053.0",
   "description": "Storybook design system",
   "repository": {
     "type": "git",
@@ -106,6 +106,10 @@
   "engines": {
     "node": ">=10",
     "npm": ">=5"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "auto": {
     "plugins": [
