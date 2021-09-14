@@ -14,22 +14,12 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "jsx": "react",
-    "jsxFactory": "h",
-    "allowJs": true,
-    "checkJs": false,
-    "baseUrl": "."
+    "jsxFactory": "h"
   },
   "include": [
     "src"
   ],
-  "exclude": [ 
-    "**/dist",
-    "**/test.*",
-    "node_modules",
-    "**/node_modules",
-    "**/*.spec.ts",
-    "**/__tests__",
-    "**/*.test.ts",
-    "**/*.stories.*"
+  "exclude": [
+    "node_modules"
   ]
 }

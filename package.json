@@ -26,7 +26,7 @@
     "clean": "rimraf ./dist",
 
     "build-stencil:watch": "stencil build --docs-readme --watch --serve",
-    "build-stencil": "stencil build --dist-custom-elements-bundle",
+    "build-stencil": "stencil build --docs --dist-custom-elements-bundle",
     "start-storybook": "start-storybook -p 6006 -s dist",
     "prebuild": "yarn clean",
     "prebuild-stencil": "yarn clean",
@@ -46,11 +46,7 @@
     "release": "auto shipit",
     "eject-ts": "zx scripts/eject-typescript.mjs"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint-staged"
-    }
-  },
+
   "lint-staged": {
     "*.html": [
       "yarn lint:js --fix"

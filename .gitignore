@@ -18,6 +18,8 @@ log.txt
 .sass-cache/
 .versions/
 node_modules/
+storybook-static/
+
 $RECYCLE.BIN/
 
 .DS_Store
@@ -30,7 +32,7 @@ UserInterfaceState.xcuserstate
 
 # dependencies
 node_modules
-
+storybook-static
 # builds
 build
 dist
