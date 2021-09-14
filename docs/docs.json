@@ -1,0 +1,543 @@
+{
+  "timestamp": "2021-09-14T05:39:52",
+  "compiler": {
+    "name": "@stencil/core",
+    "version": "2.7.1",
+    "typescriptVersion": "4.2.3"
+  },
+  "components": [
+    {
+      "filePath": "./src/components/auth-machine/auth-machine.tsx",
+      "encapsulation": "none",
+      "tag": "auth-machine",
+      "readme": "# auth-machine\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/gigya-configuration/gigya-configuration.tsx",
+      "encapsulation": "shadow",
+      "tag": "gigya-configuration",
+      "readme": "# gigya-configuration\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "apiKey",
+          "type": "string",
+          "mutable": false,
+          "attr": "api-key",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "domain",
+          "type": "string",
+          "mutable": false,
+          "attr": "domain",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "applied",
+          "detail": "{ apiKey: string; domain: string; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [
+        {
+          "event": "click",
+          "capture": false,
+          "passive": false
+        }
+      ],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/gigya-screen/gigya-screen.tsx",
+      "encapsulation": "none",
+      "tag": "gigya-screen",
+      "readme": "# gigya-screen\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "screen_set",
+          "type": "string",
+          "mutable": false,
+          "attr": "screen_set",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "start_screen",
+          "type": "string",
+          "mutable": false,
+          "attr": "start_screen",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "gigya-screen-router"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "gigya-screen-router": [
+          "gigya-screen"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/gigya-screen-popover/gigya-screen-popover.tsx",
+      "encapsulation": "none",
+      "tag": "gigya-screen-popover",
+      "readme": "# gigya-screen-popover\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "ion-content",
+        "ion-button"
+      ],
+      "dependencyGraph": {
+        "gigya-screen-popover": [
+          "ion-content",
+          "ion-button"
+        ],
+        "ion-button": [
+          "ion-ripple-effect"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/gigya-screen-router/gigya-screen-router.tsx",
+      "encapsulation": "none",
+      "tag": "gigya-screen-router",
+      "readme": "# gigya-screen-router\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "gigya-screen"
+      ],
+      "dependencyGraph": {
+        "gigya-screen-router": [
+          "gigya-screen"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/gigya-sdk-store/gigya-sdk-store.tsx",
+      "encapsulation": "shadow",
+      "tag": "gigya-sdk-store",
+      "readme": "# gigya-sdk-store\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "apiKey",
+          "type": "string",
+          "mutable": false,
+          "attr": "api-key",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "domain",
+          "type": "string",
+          "mutable": false,
+          "attr": "domain",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/gigya-store/gigya-store.tsx",
+      "encapsulation": "shadow",
+      "tag": "gigya-store",
+      "readme": "# gigya-store\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "apiKey",
+          "type": "string",
+          "mutable": false,
+          "attr": "api-key",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "domain",
+          "type": "string",
+          "mutable": false,
+          "attr": "domain",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [
+        {
+          "event": "onGigyaServiceReady",
+          "capture": false,
+          "passive": false
+        },
+        {
+          "event": "swUpdate",
+          "target": "window",
+          "capture": false,
+          "passive": false
+        }
+      ],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/loading-machine/loading-machine.tsx",
+      "encapsulation": "shadow",
+      "tag": "loading-machine",
+      "readme": "# loading-machine\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/pure-base/pure-base.tsx",
+      "encapsulation": "none",
+      "tag": "pure-base",
+      "readme": "# pure-base\r\n\r\n\r\n\r",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/pure-button/pure-button.tsx",
+      "encapsulation": "shadow",
+      "tag": "pure-button",
+      "readme": "# pure-button\r\n\r\nSimple CSS for buttons.\r\n\r\n## Default Buttons\r\n\r\nTo create a Pure Button, use the `<pure-button></pure-button>` web component. If you add a `href` to the component, it will automatically become a `<a>`. Or if you use the `as` property to manually set the base element (such as an `<input>`).\r\n\r\n<pure-button href=\"#\">A Pure Button</pure-button>\r\n<pure-button>A Pure Button</pure-button>\r\n<pure-button as=\"input\" type=\"submit\">A Pure Button</pure-button>\r\n\r\n```html\r\n<pure-button href=\"#\">A Pure Button</pure-button>\r\n<pure-button>A Pure Button</pure-button>\r\n<pure-button as=\"input\" type=\"submit\">A Pure Button</pure-button>\r\n```\r\n\r\n## Disabled Buttons\r\n\r\nTo mark a button as disabled, add the `disabled` property alongside `pure-button`. Alternatively, add the \"disabled\" attribute directly to your button.\r\n\r\n<pure-button href=\"#\" disabled>A Pure Button</pure-button>\r\n<pure-button disabled>A Pure Button</pure-button>\r\n<pure-button as=\"input\" type=\"submit\" disabled>A Pure Button</pure-button>\r\n\r\n```html\r\n<pure-button href=\"#\" disabled>A Pure Button</pure-button>\r\n<pure-button disabled>A Pure Button</pure-button>\r\n<pure-button as=\"input\" type=\"submit\" disabled>A Pure Button</pure-button>\r\n```\r\n\r",
+      "docs": "Simple CSS for buttons.",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "as",
+          "type": "string",
+          "mutable": false,
+          "attr": "as",
+          "reflectToAttr": false,
+          "docs": "HTML element to use as basis",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "color",
+          "type": "string",
+          "mutable": false,
+          "attr": "color",
+          "reflectToAttr": false,
+          "docs": "Background color",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "disabled",
+          "reflectToAttr": false,
+          "docs": "Is disabled?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "href",
+          "type": "string",
+          "mutable": false,
+          "attr": "href",
+          "reflectToAttr": false,
+          "docs": "Displays button as link",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "target",
+          "type": "string",
+          "mutable": false,
+          "attr": "target",
+          "reflectToAttr": false,
+          "docs": "Specifies where to display the linked URL.\nOnly applies when an `href` is provided.\nSpecial keywords: `\"_blank\"`, `\"_self\"`, `\"_parent\"`, `\"_top\"`.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "type",
+          "type": "\"button\" | \"reset\" | \"submit\"",
+          "mutable": false,
+          "attr": "type",
+          "reflectToAttr": false,
+          "docs": "The button or input type (usually submit)",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "button",
+              "type": "string"
+            },
+            {
+              "value": "reset",
+              "type": "string"
+            },
+            {
+              "value": "submit",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "mutable": false,
+          "attr": "value",
+          "reflectToAttr": false,
+          "docs": "Optional prop for input to show text",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/router-link/router-link.tsx",
+      "encapsulation": "shadow",
+      "tag": "router-link",
+      "readme": "# router-link\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/stories/Stepper.tsx",
+      "encapsulation": "none",
+      "tag": "stepper-machine",
+      "readme": "# stepper-machine\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    }
+  ]
+}

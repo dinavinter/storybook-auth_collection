@@ -1,0 +1,237 @@
+{
+  "version": 1.2,
+  "tags": [
+    {
+      "name": "auth-machine",
+      "path": "./src/components/auth-machine/auth-machine.tsx",
+      "description": "",
+      "attributes": [],
+      "events": [],
+      "methods": [],
+      "slots": [],
+      "cssProperties": [],
+      "cssParts": []
+    },
+    {
+      "name": "gigya-configuration",
+      "path": "./src/components/gigya-configuration/gigya-configuration.tsx",
+      "description": "",
+      "attributes": [
+        {
+          "name": "api-key",
+          "type": "string",
+          "description": "",
+          "required": false
+        },
+        {
+          "name": "domain",
+          "type": "string",
+          "description": "",
+          "required": false
+        }
+      ],
+      "events": [
+        {
+          "name": "applied",
+          "description": ""
+        }
+      ],
+      "methods": [],
+      "slots": [],
+      "cssProperties": [],
+      "cssParts": []
+    },
+    {
+      "name": "gigya-screen",
+      "path": "./src/components/gigya-screen/gigya-screen.tsx",
+      "description": "",
+      "attributes": [
+        {
+          "name": "screen_set",
+          "type": "string",
+          "description": "",
+          "required": false
+        },
+        {
+          "name": "start_screen",
+          "type": "string",
+          "description": "",
+          "required": false
+        }
+      ],
+      "events": [],
+      "methods": [],
+      "slots": [],
+      "cssProperties": [],
+      "cssParts": []
+    },
+    {
+      "name": "gigya-screen-popover",
+      "path": "./src/components/gigya-screen-popover/gigya-screen-popover.tsx",
+      "description": "",
+      "attributes": [],
+      "events": [],
+      "methods": [],
+      "slots": [],
+      "cssProperties": [],
+      "cssParts": []
+    },
+    {
+      "name": "gigya-screen-router",
+      "path": "./src/components/gigya-screen-router/gigya-screen-router.tsx",
+      "description": "",
+      "attributes": [],
+      "events": [],
+      "methods": [],
+      "slots": [],
+      "cssProperties": [],
+      "cssParts": []
+    },
+    {
+      "name": "gigya-sdk-store",
+      "path": "./src/components/gigya-sdk-store/gigya-sdk-store.tsx",
+      "description": "",
+      "attributes": [
+        {
+          "name": "api-key",
+          "type": "string",
+          "description": "",
+          "required": false
+        },
+        {
+          "name": "domain",
+          "type": "string",
+          "description": "",
+          "required": false
+        }
+      ],
+      "events": [],
+      "methods": [],
+      "slots": [],
+      "cssProperties": [],
+      "cssParts": []
+    },
+    {
+      "name": "gigya-store",
+      "path": "./src/components/gigya-store/gigya-store.tsx",
+      "description": "",
+      "attributes": [
+        {
+          "name": "api-key",
+          "type": "string",
+          "description": "",
+          "required": false
+        },
+        {
+          "name": "domain",
+          "type": "string",
+          "description": "",
+          "required": false
+        }
+      ],
+      "events": [],
+      "methods": [],
+      "slots": [],
+      "cssProperties": [],
+      "cssParts": []
+    },
+    {
+      "name": "loading-machine",
+      "path": "./src/components/loading-machine/loading-machine.tsx",
+      "description": "",
+      "attributes": [],
+      "events": [],
+      "methods": [],
+      "slots": [],
+      "cssProperties": [],
+      "cssParts": []
+    },
+    {
+      "name": "pure-base",
+      "path": "./src/components/pure-base/pure-base.tsx",
+      "description": "",
+      "attributes": [],
+      "events": [],
+      "methods": [],
+      "slots": [],
+      "cssProperties": [],
+      "cssParts": []
+    },
+    {
+      "name": "pure-button",
+      "path": "./src/components/pure-button/pure-button.tsx",
+      "description": "Simple CSS for buttons.",
+      "attributes": [
+        {
+          "name": "as",
+          "type": "string",
+          "description": "HTML element to use as basis",
+          "required": false
+        },
+        {
+          "name": "color",
+          "type": "string",
+          "description": "Background color",
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "description": "Is disabled?",
+          "required": false
+        },
+        {
+          "name": "href",
+          "type": "string",
+          "description": "Displays button as link",
+          "required": false
+        },
+        {
+          "name": "target",
+          "type": "string",
+          "description": "Specifies where to display the linked URL.\nOnly applies when an `href` is provided.\nSpecial keywords: `\"_blank\"`, `\"_self\"`, `\"_parent\"`, `\"_top\"`.",
+          "required": false
+        },
+        {
+          "name": "type",
+          "type": "\"button\" | \"reset\" | \"submit\"",
+          "description": "The button or input type (usually submit)",
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "description": "Optional prop for input to show text",
+          "required": false
+        }
+      ],
+      "events": [],
+      "methods": [],
+      "slots": [],
+      "cssProperties": [],
+      "cssParts": []
+    },
+    {
+      "name": "router-link",
+      "path": "./src/components/router-link/router-link.tsx",
+      "description": "",
+      "attributes": [],
+      "events": [],
+      "methods": [],
+      "slots": [],
+      "cssProperties": [],
+      "cssParts": []
+    },
+    {
+      "name": "stepper-machine",
+      "path": "./src/stories/Stepper.tsx",
+      "description": "",
+      "attributes": [],
+      "events": [],
+      "methods": [],
+      "slots": [],
+      "cssProperties": [],
+      "cssParts": []
+    }
+  ]
+}

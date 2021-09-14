@@ -1,0 +1,16 @@
+Index: package.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/package.json b/package.json
+--- a/package.json	
++++ b/package.json	(date 1631543573579)
+@@ -30,6 +30,7 @@
+     "@stencil/core": "^2.7.0",
+     "@stencil/router": "^1.0.1",
+     "@stencil/store": "^1.4.1",
++    "@xstate/inspect": "^0.5.0",
+     "lit-html": "^1.4.1",
+     "stencil-context": "^0.0.3",
+     "stencil-router-v2": "^0.6.0",
