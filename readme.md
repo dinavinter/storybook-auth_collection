@@ -1,75 +1,139 @@
-![Built With Stencil](https://img.shields.io/badge/-Built%20With%20Stencil-16161d.svg?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjIuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI%2BCjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI%2BCgkuc3Qwe2ZpbGw6I0ZGRkZGRjt9Cjwvc3R5bGU%2BCjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik00MjQuNywzNzMuOWMwLDM3LjYtNTUuMSw2OC42LTkyLjcsNjguNkgxODAuNGMtMzcuOSwwLTkyLjctMzAuNy05Mi43LTY4LjZ2LTMuNmgzMzYuOVYzNzMuOXoiLz4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTQyNC43LDI5Mi4xSDE4MC40Yy0zNy42LDAtOTIuNy0zMS05Mi43LTY4LjZ2LTMuNkgzMzJjMzcuNiwwLDkyLjcsMzEsOTIuNyw2OC42VjI5Mi4xeiIvPgo8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNDI0LjcsMTQxLjdIODcuN3YtMy42YzAtMzcuNiw1NC44LTY4LjYsOTIuNy02OC42SDMzMmMzNy45LDAsOTIuNywzMC43LDkyLjcsNjguNlYxNDEuN3oiLz4KPC9zdmc%2BCg%3D%3D&colorA=16161d&style=flat-square)
+# Storybook Design System
 
-# Stencil Component Starter
+<img src="src/design-system.png" width="100%" />
 
-This is a starter project for building a standalone Web Component using Stencil.
+[![NPM](https://img.shields.io/npm/v/@storybook/design-system.svg)](https://www.npmjs.com/package/@storybook/design-system) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-Stencil is also great for building entire apps. For that, use the [stencil-app-starter](https://github.com/ionic-team/stencil-app-starter) instead.
+## Used by
+- [Storybook homepage](https://storybook.js.org/)
+- [LearnStorybook.com](https://www.learnstorybook.com/)
+- [Chromatic.com](https://www.chromatic.com/)
 
-# Stencil
+Note: this design system is not used in Storybook's UI. The stack is different and theming requirements of Storybook add complexity beyond the scope of this project. However, Storybook's visual design is identical to what's here.
 
-Stencil is a compiler for building fast web apps using Web Components.
+## Tech stack
+Building components
+- 📚 [Storybook](https://storybook.js.org) for UI component development and [auto-generated docs](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a)
+- 💅 [Styled-components](https://www.styled-components.com/) for component-scoped styling
+- ⚛️ [React](https://reactjs.org/) declarative component-centric UI
 
-Stencil combines the best concepts of the most popular frontend frameworks into a compile-time rather than run-time tool.  Stencil takes TypeScript, JSX, a tiny virtual DOM layer, efficient one-way data binding, an asynchronous rendering pipeline (similar to React Fiber), and lazy-loading out of the box, and generates 100% standards-based Web Components that run in any browser supporting the Custom Elements v1 spec.
+Maintaining the system
+- 📦 [NPM](https://www.npmjs.com/) for [packaging and distribution](https://blog.hichroma.com/how-packaging-makes-it-dead-simple-to-share-ui-components-29912593539d)
+- ✅ [Chromatic](https://www.chromatic.com/) to prevent UI bugs in components (by Storybook maintainers)
+- 🚥 [CircleCI](https://circleci.com/) Continuous integration
 
-Stencil components are just Web Components, so they work in any major framework or with no framework at all.
+## Why 
+The Storybook design system codifies existing UI components into a central, well-maintained repository. It is built to address having to paste the same components into multiple projects again and again. This simplifies building UI's with Storybook's design patterns.  
 
-## Getting Started
+#### What we're doing
+- Build and maintain a design system in the open
+- Share UI components between multiple apps 
+- Dogfood upcoming Storybook features 
+- Welcome contributors of all levels and backgrounds
 
-To start building a new web component using Stencil, clone this repo to a new directory:
+#### What we're not doing
+- Rewrite all new components from scratch
+- Overhaul the visual design of components
+- Typescript (the consumer apps don't use it)
+- Compete with more general design systems like ANT or Material.  
+
+## Install
 
 ```bash
-git clone https://github.com/ionic-team/stencil-component-starter.git auth-machine
-cd auth-machine
-git remote rm origin
+npm install --save @storybook/design-system
 ```
 
-and run:
+## Global Styles
 
-```bash
-npm install
-npm start
+Components within the design system assume that a set of global styles have been configured. Depending upon the needs of the application, this can be done several ways:
+
+#### Option 1: Render the `GlobalStyle` component
+
+Useful when you don't need any custom `body` styling in the application, typically this would be placed in a layout component that wraps all pages, or a top-level `App` component.
+
+```javascript
+import { global } from '@storybook/design-system';
+const { GlobalStyle } = global;
 ```
 
-To build the component for production, run:
-
-```bash
-npm run build
+```javascript
+/* Render the global styles once per page */
+<GlobalStyle />
 ```
 
-To run the unit tests for the components, run:
+#### Option 2: Use the `bodyStyles` to apply styling
 
-```bash
-npm test
+Useful when you want build upon the shared global styling.
+
+```javascript
+import { createGlobalStyle } from 'styled-components';
+import { global } from '@storybook/design-system';
+const { bodyStyles } = global;
+
+const CustomGlobalStyle = createGlobalStyle`
+  body {
+    ${bodyStyles}
+    // Custom body styling for the app
+  }
+`;
 ```
 
-Need help? Check out our docs [here](https://stenciljs.com/docs/my-first-component).
+```javascript
+/* Render the global styles once per page */
+<CustomGlobalStyle />
+```
 
+## Font Loading
 
-## Naming Components
+Rather than `@import` fonts in the `GlobalStyle` component, the design system's font URL is exported with the intention of using it in a `<link>` tag as the href. Different frameworks and environments handle component re-renders in their own way (a re-render would cause the font to be re-fetched), so this approach allows the design system consumers to choose the font loading method that is most appropriate for their environment.
 
-When creating new component tags, we recommend _not_ using `stencil` in the component name (ex: `<stencil-datepicker>`). This is because the generated component has little to nothing to do with Stencil; it's just a web component!
+#### Option 1: Build the link tag manually
 
-Instead, use a prefix that fits your company or any name for a group of related components. For example, all of the Ionic generated web components use the prefix `ion`.
+```javascript
+import { global } from '@storybook/design-system';
 
+const fontLink = document.createElement('link');
 
-## Using this component
+fontLink.href = global.fontUrl;
+fontLink.rel = 'stylesheet';
 
-There are three strategies we recommend for using web components built with Stencil.
+document.head.appendChild(fontLink);
+```
 
-The first step for all three of these strategies is to [publish to NPM](https://docs.npmjs.com/getting-started/publishing-npm-packages).
+#### Option 2: Render the link tag in a component
 
-### Script tag
+```jsx
+import React from 'react';
+import { global } from '@storybook/design-system';
 
-- Put a script tag similar to this `<script src='https://unpkg.com/auth-machine@0.0.1/dist/auth-machine.esm.js'></script>` in the head of your index.html
-- Then you can use the element anywhere in your template, JSX, html etc
+const Layout = ({ children }) => (
+  <html>
+    <head>
+      <link href={global.fontUrl} rel="stylesheet" />
+    </head>
 
-### Node Modules
-- Run `npm install auth-machine --save`
-- Put a script tag similar to this `<script src='node_modules/auth-machine/dist/auth-machine.esm.js'></script>` in the head of your index.html
-- Then you can use the element anywhere in your template, JSX, html etc
+    <body>{children}</body>
+  </html>
+);
 
-### In a stencil-starter app
-- Run `npm install auth-machine --save`
-- Add an import to the npm packages `import auth-machine;`
-- Then you can use the element anywhere in your template, JSX, html etc
+export default Layout;
+```
+
+## Development Scripts
+
+#### `yarn release`
+
+> Bump the version
+
+> Push a release to GitHub and npm
+
+> Push a changelog to GitHub
+
+_Notes:_
+
+- Requires authentication with [`npm adduser`](https://docs.npmjs.com/cli/adduser.html)
+- [`auto`](https://github.com/intuit/auto) is used to generate a changelog and push it to GitHub. In order for this to work correctly, **environment variables called `GH_TOKEN` and `NPM_TOKEN` are needed** that reference a [GitHub personal access token](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) and a [NPM "Publish" token](https://docs.npmjs.com/creating-and-viewing-access-tokens) with the appropriate permissions to update the repo.
+
+## License
+
+MIT © [shilman](https://github.com/shilman)
