@@ -1,0 +1,119 @@
+{
+  "name": "auth-story-collection",
+  "version": "1.0.0-canary.9de9053.0",
+  "description": "Storybook auth system",
+  "main": "dist/index.cjs.js",
+  "module": "dist/custom-elements/index.js",
+  "es2015": "dist/esm/index.mjs",
+  "es2017": "dist/esm/index.mjs",
+  "types": "dist/custom-elements/index.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "unpkg": "dist/gigya-auth-machine/gigya-auth-machine.esm.js",
+  "files": [
+    "dist/",
+    "loader/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dinavinter/storybook-auth_collection.git"
+  },
+   "author": {
+    "name": "Dina Vinter",
+    "email": "dina.vintr@gmail.com"
+  },
+  "scripts": {
+    "clean": "rimraf ./dist",
+
+    "build-stencil:watch": "stencil build --docs-readme --watch --serve",
+    "build-stencil": "stencil build --dist-custom-elements-bundle",
+    "start-storybook": "start-storybook -p 6006 -s dist",
+    "prebuild": "yarn clean",
+    "prebuild-stencil": "yarn clean",
+    "build": "stencil build --docs",
+    "start": "stencil build --dev --service-worker --watch --serve",
+    "test": "stencil test --spec --e2e",
+    "test.watch": "stencil test --spec --e2e --watchAll",
+    "generate": "stencil generate",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "typescript:check": "tsc --project ./tsconfig.json --noEmit",
+    "typescript:generate": "tsc --declaration --emitDeclarationOnly --outDir dist --declarationMap",
+    "lint": "yarn lint:js && yarn lint:package",
+    "lint:js": "cross-env NODE_ENV=production eslint --cache --cache-location=.cache/eslint --ext .js,.jsx,.html,.ts,.tsx,.mjs --report-unused-disable-directives",
+    "lint:package": "sort-package-json",
+    "prerelease": "concurrently \"yarn build-stencil\" \"yarn build-storybook\"",
+    "release": "auto shipit",
+    "eject-ts": "zx scripts/eject-typescript.mjs"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.html": [
+      "yarn lint:js --fix"
+    ],
+    "*.js": [
+      "yarn lint:js --fix"
+    ],
+    "*.ts?(x)": [
+      "yarn lint:js --fix"
+    ],
+    "package.json": [
+      "yarn lint:package"
+    ]
+  },
+  "dependencies": {
+    "@ionic/core": "^5.6.14",
+    "@stencil/core": "^2.7.0",
+    "@stencil/router": "^1.0.1",
+    "@stencil/store": "^1.4.1",
+    "@xstate/fsm": "^1.6.2",
+    "@xstate/inspect": "^0.5.0",
+    "lit-html": "^1.4.1",
+    "stencil-router-v2": "^0.6.0",
+   "storybook-xstate-wc": "^1.0.2",
+    "workbox-build": "^6.2.4",
+     "workbox-routing": "^6.2.4",
+    "workbox-strategies": "^6.2.4",
+    "xstate": "^4.23.1"
+  },
+  "devDependencies": {
+    "auto": "^9.50.1",
+    "zx": "^1.14.1",
+    "concurrently": "^6.2.0",
+    "rimraf": "^3.0.2",
+
+    "@babel/core": "^7.15.5",
+    "@storybook/addon-actions": "^6.3.8",
+    "@storybook/addon-essentials": "^6.3.8",
+    "@storybook/addon-links": "^6.3.8",
+    "@storybook/web-components": "^6.3.8",
+    "@types/jest": "^26.0.24",
+    "babel-loader": "^8.2.2",
+    "jest": "^26.6.3",
+    "jest-cli": "^26.6.3",
+    "puppeteer": "^10.0.0"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "auto": {
+    "plugins": [
+      "npm",
+      "released"
+    ]
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
+  },
+  "storybook": {
+    "title": "Storybook Auth Stories",
+    "url": "https://61278281c6f886003a06ba66-qpyjuyasqs.chromatic.com"
+  }
+}
