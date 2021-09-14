@@ -44,7 +44,6 @@
     "lint:package": "sort-package-json",
     "prerelease": "concurrently \"yarn build-stencil\" \"yarn build-storybook\"",
     "release": "auto shipit",
-    "eject-ts": "zx scripts/eject-typescript.mjs"
   },
 
   "lint-staged": {
@@ -78,10 +77,8 @@
   },
   "devDependencies": {
     "auto": "^9.50.1",
-    "zx": "^1.14.1",
     "concurrently": "^6.2.0",
     "rimraf": "^3.0.2",
-
     "@babel/core": "^7.15.5",
     "@storybook/addon-actions": "^6.3.8",
     "@storybook/addon-essentials": "^6.3.8",
