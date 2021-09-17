@@ -60,6 +60,7 @@ export class AuthMachine implements ComponentInterface {
   private _service = interpret(authenticationMachine, {devTools: true});
 
   @State() state = authenticationMachine.initialState;
+  @State() authStorageState = authenticationMachine.initialState;
   @Prop() request: AuthRequest;
   @Prop() event: MessageEvent;
 
@@ -67,6 +68,12 @@ export class AuthMachine implements ComponentInterface {
 
     this._service.subscribe(state => {
       this.state = state;
+    });
+    this._service.onTransition((state) => {
+      const {authStorage} = state.context;
+      if(authStorage != null) { // @ts-ignore
+        this.authStorageState=  authStorage.state;
+      }
     });
 
     this._service.start();
@@ -93,6 +100,8 @@ export class AuthMachine implements ComponentInterface {
         <button onClick={() => send({type: "AUTH", request: this.request})}>Send</button>
         <p>
           {JSON.stringify(this.state && this.state.context || this.state)}
+          auth storage
+          {JSON.stringify(this.authStorageState && this.authStorageState.context || this.authStorageState)}
 
         </p>
         {/*<InspectorViz receiver={ {receive:(e) =>{*/}

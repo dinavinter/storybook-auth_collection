@@ -111,31 +111,12 @@
 //
 // }
 import {authStorageMachine} from "./auth";
-import {createMachine, send, actions} from "xstate";
-// import {assign, createMachine, send, spawn, actions} from "xstate";
+// import {createMachine, send, actions} from "xstate";
+import {assign, createMachine, send, spawn, actions} from "xstate";
 import {RequestMachineEventTypes} from "./request";
 
 const {log} = actions;
 
-// const pingMachine = createMachine({
-//   id: 'ping',
-//   initial: 'active',
-//   states: {
-//     active: {
-//       invoke: {
-//         id: 'pong',
-//         src: pongMachine
-//       },
-//       // Sends 'PING' event to child machine with ID 'pong'
-//       entry: send({ type: 'PING' }, { to: 'pong' }),
-//       on: {
-//         PONG: {
-//           actions: send({ type: 'PING' }, { to: 'pong', delay: 1000 })
-//         }
-//       }
-//     }
-//   }
-// });
 
 const authStorage = authStorageMachine();
 export const authClientMachine = createMachine<{
@@ -148,32 +129,29 @@ export const authClientMachine = createMachine<{
   },
   states: {
     idle: {
-      // entry: assign({
-      //   authStorage: spawn(authStorageMachine())
-      // }),
       on: {
         AUTH: {
-          target: 'authorizing'
-        }
-      }
-    },
+          target: 'authorizing',
+       }
+    }},
     authorizing: {
       entry: [log("authorizing - entry"),
-        send({type: RequestMachineEventTypes.send}, {to: 'auth-storage'})],
-      invoke: {
-        id: 'auth-storage',
-        src: authStorage
-      },
-      on: {
+        assign({
+          authStorage: () => spawn(authStorage, { sync: true, name:`auth-storage` })
+        }),
+        send((_c, event) => ({ ...event, type: RequestMachineEventTypes.send }), {
+          to: (context) => context.authStorage
+        })],
+       on: {
         [RequestMachineEventTypes.success]: {target: 'authorized'},
         [RequestMachineEventTypes.failed]: {target: 'not-authorized'}
       }
     },
     authorized: {
-      type: 'final'
+      // type: 'final'
     },
     ['not-authorized']: {
-      type: 'final'
+      // type: 'final'
     }
   }
 });
