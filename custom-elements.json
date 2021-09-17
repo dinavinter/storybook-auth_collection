@@ -2,10 +2,28 @@
   "version": 1.2,
   "tags": [
     {
+      "name": "any-machine",
+      "path": "./src/components/any-machine/any-machine.tsx",
+      "description": "",
+      "attributes": [],
+      "events": [],
+      "methods": [],
+      "slots": [],
+      "cssProperties": [],
+      "cssParts": []
+    },
+    {
       "name": "auth-machine",
       "path": "./src/components/auth-machine/auth-machine.tsx",
       "description": "",
-      "attributes": [],
+      "attributes": [
+        {
+          "name": "request",
+          "type": "any",
+          "description": "",
+          "required": false
+        }
+      ],
       "events": [],
       "methods": [],
       "slots": [],

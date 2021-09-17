@@ -5,9 +5,16 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { StateMachine } from "xstate/lib/types";
+import { AuthRequest } from "./components/auth-machine/macines/auth_types";
 import { GigyaConfig } from "./components/store/gigya-config-store";
 export namespace Components {
+    interface AnyMachine {
+        "machine": StateMachine<any, any, any, any>;
+    }
     interface AuthMachine {
+        "event": MessageEvent;
+        "request": AuthRequest;
     }
     interface GigyaConfiguration {
         "apiKey": string;
@@ -69,6 +76,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLAnyMachineElement extends Components.AnyMachine, HTMLStencilElement {
+    }
+    var HTMLAnyMachineElement: {
+        prototype: HTMLAnyMachineElement;
+        new (): HTMLAnyMachineElement;
+    };
     interface HTMLAuthMachineElement extends Components.AuthMachine, HTMLStencilElement {
     }
     var HTMLAuthMachineElement: {
@@ -142,6 +155,7 @@ declare global {
         new (): HTMLStepperMachineElement;
     };
     interface HTMLElementTagNameMap {
+        "any-machine": HTMLAnyMachineElement;
         "auth-machine": HTMLAuthMachineElement;
         "gigya-configuration": HTMLGigyaConfigurationElement;
         "gigya-screen": HTMLGigyaScreenElement;
@@ -157,7 +171,12 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface AnyMachine {
+        "machine"?: StateMachine<any, any, any, any>;
+    }
     interface AuthMachine {
+        "event"?: MessageEvent;
+        "request"?: AuthRequest;
     }
     interface GigyaConfiguration {
         "apiKey"?: string;
@@ -219,6 +238,7 @@ declare namespace LocalJSX {
     interface StepperMachine {
     }
     interface IntrinsicElements {
+        "any-machine": AnyMachine;
         "auth-machine": AuthMachine;
         "gigya-configuration": GigyaConfiguration;
         "gigya-screen": GigyaScreen;
@@ -237,6 +257,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "any-machine": LocalJSX.AnyMachine & JSXBase.HTMLAttributes<HTMLAnyMachineElement>;
             "auth-machine": LocalJSX.AuthMachine & JSXBase.HTMLAttributes<HTMLAuthMachineElement>;
             "gigya-configuration": LocalJSX.GigyaConfiguration & JSXBase.HTMLAttributes<HTMLGigyaConfigurationElement>;
             "gigya-screen": LocalJSX.GigyaScreen & JSXBase.HTMLAttributes<HTMLGigyaScreenElement>;

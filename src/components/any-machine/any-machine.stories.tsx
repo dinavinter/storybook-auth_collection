@@ -3,28 +3,28 @@
 import { html } from 'lit-html';
 // import { RenderMachine } from 'storybook-xstate-addon/RenderMachine';
 import {authenticationMachine} from "./machine";
-import {AnyRequestObject} from "./macines/request";
+import {interpret} from "xstate";
 // import {RenderMachine} from "storybook-xstate-addon/RenderMachine";
 
+ const service = interpret(authenticationMachine, {devTools: true});
 
-
+ service.start();
 export default {
-  title: 'Autn/auth-machine',
-  component:'auth-machine',
+  title: 'Autn/any-machine',
+  component:'any-machine',
   parameters: {
     xstate: true,
     machine:authenticationMachine,
-
+    state: service.state
 
   }
  };
 
- const Template  = ({request}) => html`<auth-machine request="${request}" ></auth-machine> `;
+ const Template  = () => html`<any-machine machine="${authenticationMachine}" ></any-machine> `;
 // export const Screen = (args) =>`<gigya-screen ${{...args}} ></gigya-screen>`;
 
 export const Default = Template.bind({});
-Default.title= 'Autn/auth-machine'
-Default.args =  {request: {reqdata:'ads'} as AnyRequestObject}
+Default.title= 'Autn/any-machine'
 Default.parameters = {
   xstate: {
     xstate: true,

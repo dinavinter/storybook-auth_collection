@@ -1,11 +1,46 @@
 {
-  "timestamp": "2021-09-14T06:34:32",
+  "timestamp": "2021-09-17T02:30:46",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.8.0",
     "typescriptVersion": "4.2.3"
   },
   "components": [
+    {
+      "filePath": "./src/components/any-machine/any-machine.tsx",
+      "encapsulation": "none",
+      "tag": "any-machine",
+      "readme": "# auth-machine\r\n\r\n\r\n\r",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "machine",
+          "type": "StateMachine<any, any, any, any, ActionObject<any, any>>",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "StateMachine<any, any, any, any, ActionObject<any, any>>"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
     {
       "filePath": "./src/components/auth-machine/auth-machine.tsx",
       "encapsulation": "none",
@@ -14,7 +49,39 @@
       "docs": "",
       "docsTags": [],
       "usage": {},
-      "props": [],
+      "props": [
+        {
+          "name": "event",
+          "type": "MessageEvent<any>",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "MessageEvent<any>"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "request",
+          "type": "any",
+          "mutable": false,
+          "attr": "request",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "any"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
       "methods": [],
       "events": [],
       "listeners": [],
@@ -162,7 +229,18 @@
       "props": [],
       "methods": [],
       "events": [],
-      "listeners": [],
+      "listeners": [
+        {
+          "event": "screenSet",
+          "capture": false,
+          "passive": false
+        },
+        {
+          "event": "auth",
+          "capture": false,
+          "passive": false
+        }
+      ],
       "styles": [],
       "slots": [],
       "parts": [],

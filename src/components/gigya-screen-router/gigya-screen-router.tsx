@@ -110,6 +110,8 @@ export class ScreenRouter {
     })
   }
 
+
+
   // componentWillLoad() {
   //   Router.onChange('url',  (newValue, oldValue) => console.log(`new ${newValue} old ${oldValue}`));
   // }

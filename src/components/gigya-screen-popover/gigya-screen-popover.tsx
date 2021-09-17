@@ -1,5 +1,6 @@
-import {Component, h} from '@stencil/core';
+import {Component, h, Listen} from '@stencil/core';
 import {popoverController} from '@ionic/core';
+import {ScreenSetRoute} from "../auth-ruter";
 
 
 
@@ -21,10 +22,14 @@ export class PopoverScreen {
     console.log('onDidDismiss resolved with role', role);
   }
 
-  // @Listen('screenSet')
-  // todoCompletedHandler(event: CustomEvent<ScreenSet>) {
-  //   console.log('Received the custom todoCompleted event: ', event.detail);
-  // }
+  @Listen('screenSet')
+  todoCompletedHandler(event: CustomEvent<ScreenSetRoute>) {
+    console.log('Received the custom todoCompleted event: ', event.detail);
+  }
+  @Listen('auth')
+  authRequestHandler(event: Event) {
+    console.log('Received the custom todoCompleted event: ', event);
+  }
 
 
   render() {

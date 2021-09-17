@@ -7,21 +7,29 @@
   <meta name="theme-color" content="#16161d">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <link href="/global/app.css" rel="stylesheet">
+
+
   <script type="module" src="/build/gigya-auth-machine.esm.js"></script>
   <script nomodule src="/build/gigya-auth-machine.js"></script>
 </head>
 <body>
+<div  >
 
-<gigya-store  apiKey="3_WKO1lFJ4yMz4MtnHK0d5AqgOCaU3KdYerHvETiMWD5IZ9qv5ccQmyC7qkICVchrQ" domain="gigya.com">
+  <gigya-store  apiKey="3_WKO1lFJ4yMz4MtnHK0d5AqgOCaU3KdYerHvETiMWD5IZ9qv5ccQmyC7qkICVchrQ" domain="gigya.com">
 
-<!--  <gigya-screen screen_set="Default-RegistrationLogin"  start_screen="gigya-login-screen" ></gigya-screen>-->
-  <auth-machine></auth-machine>
-  <router-link></router-link>
-  <gigya-screen-router >
+    <!--  <gigya-screen screen_set="Default-RegistrationLogin"  start_screen="gigya-login-screen" ></gigya-screen>-->
+<!--    <router-link></router-link>-->
+    <gigya-screen-router >
 
-  </gigya-screen-router>
+    </gigya-screen-router>
 
-</gigya-store>
+  </gigya-store>
 
+  <iframe data-xstate></iframe>
+  <script src="./inspect.js" type="module"></script>
+
+  <auth-machine margin="50 50 50 50"> </auth-machine>
+
+</div>
 </body>
 </html>
