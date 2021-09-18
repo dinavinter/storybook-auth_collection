@@ -1,18 +1,8 @@
-import {  sendParent, ServiceConfig, StateMachine} from "xstate";
+import {sendParent, ServiceConfig, StateMachine} from "xstate";
 import {assign, send, actions, createMachine} from "xstate";
-// import {StateMachine} from "xstate/es";
-const {log} = actions;
 
-// interface RequestStates {
-//   states: {
-//     idle: {};
-//     pending: {};
-//     successful: {};
-//     failed: {};
-//   };
-// }
 
-// type Fetcher<TRequest, TResult> = (request: TRequest) => Promise<TResult>;
+
 export type RequestMachineEvents<TRequest extends AnyRequestObject = AnyRequestObject,
   TResult extends AnyResultObject = AnyResultObject> =
   | { type: "SEND"; request: TRequest }
@@ -26,6 +16,9 @@ export interface RequestMachineContext<TRequest extends AnyRequestObject = AnyRe
   request?: TRequest;
   result?: TResult;
   error?: any;
+
+  [key: string]: any;
+
 }
 
 export interface AnyRequestObject {
@@ -43,14 +36,12 @@ export interface AnyMachine extends StateMachine<any, any, any, any> {
 
 export declare type RequestMachine<TRequest extends AnyRequestObject = AnyRequestObject,
   TResult extends AnyResultObject = AnyResultObject> =
-  | StateMachine<RequestMachineContext<TRequest, TResult>,
-  any,
-  RequestMachineEvents<TRequest, TResult>,
-  any>
-  | AnyMachine;
+  StateMachine<RequestMachineContext<TRequest, TResult>, any, RequestMachineEvents<TRequest, TResult>, any>;
+
+export type RequestEvent<TRequest extends AnyRequestObject = AnyRequestObject> = { type: "SEND"; request: TRequest };
 
 export type RequestMachineFinalEvents<TRequest, TResult> =
-  | ({ type: "SEND" } & {  request: TRequest })
+  | RequestEvent
   | ({ type: "REQUEST-SUCCESSFUL" } & RequestMachineContext<TRequest, TResult>)
   | { type: "REQUEST-FAILED" & RequestMachineContext<TRequest, TResult> };
 
@@ -77,14 +68,25 @@ export declare type LoaderPromise<TRequest, TResult> = (
 // TRequestMachine  extends  StateMachine<TContext,any, TEvent, any>= RequestMachine<TRequest, TResult>,
 // TService extends MachineService<TContext, TEvent > = MachineService<TContext, TEvent >
 
+export function requestMachine<TRequest extends AnyRequestObject = AnyRequestObject,
+  TResult extends AnyResultObject = AnyResultObject>(machineId: string): RequestMachine<TRequest, TResult> {
+  return createRequestMachine(undefined, undefined, machineId);
+}
+
+// declare interface MachineModel<TRequest extends AnyRequestObject = AnyRequestObject,
+//   TResult extends AnyResultObject = AnyResultObject> extends Model<>{
+//
+// }
+const {log} = actions;
+
 export function createRequestMachine<TRequest extends AnyRequestObject = AnyRequestObject,
   TResult extends AnyResultObject = AnyResultObject>(request?: TRequest, services?: {
   loadService: MachineService<TRequest, TResult>
-}): RequestMachine<TRequest, TResult> {
-  return createMachine<RequestMachineContext<TRequest, TResult>,
-    RequestMachineEvents<TRequest, TResult>>(
+}, machineId: string = 'loader'): RequestMachine<TRequest, TResult> {
+
+  return createMachine<RequestMachineContext<TRequest, TResult>, RequestMachineEvents<TRequest, TResult>, any>(
     {
-      id: "fetch",
+      id: `request.${machineId}`,
       initial: request ? "loading" : "idle",
       context: {
         request: request,
@@ -96,7 +98,7 @@ export function createRequestMachine<TRequest extends AnyRequestObject = AnyRequ
             SEND: {
               target: "loading",
               actions: ["setRequest"],
-            } ,
+            },
 
             FETCH: {
               target: "loading",
@@ -105,9 +107,10 @@ export function createRequestMachine<TRequest extends AnyRequestObject = AnyRequ
           },
         },
         loading: {
-          entry: log("loading - entry"),
+          entry: [log("loading - entry"), "onLoading"],
           invoke: {
             src: "loadService",
+            id: `${machineId}Loading`,
             onDone: {
               // actions:[
               //   { target: "successful", actions: ["setResult"] }
@@ -138,15 +141,12 @@ export function createRequestMachine<TRequest extends AnyRequestObject = AnyRequ
           },
         },
         failed: {
-          entry: [log("failed - entry"), "onFailed"]
+          entry: [log("failed - entry"), "onFailed", "sendFailedToParent"]
 
         },
         successful: {
-          entry: log("successful - entry"),
-            invoke: {
-            id: "onSuccess",
-            src: "onSuccess",
-          }
+          entry: [log("successful - entry"), "onSuccess", "sendSuccessToParent"]
+
         },
       },
     },
@@ -162,15 +162,19 @@ export function createRequestMachine<TRequest extends AnyRequestObject = AnyRequ
           error: event.error,
         })),
 
-        onFailed: sendParent((context, _) => ({
+        sendFailedToParent: sendParent((context, _) => ({
+          ...context,
+          type: RequestMachineEventTypes.failed,
+        })),
+        sendSuccessToParent: sendParent((context, _) => ({
           ...context,
           type: RequestMachineEventTypes.failed,
         })),
 
-        onSuccess: sendParent((context, _) => ({
-          ...context,
-          type: RequestMachineEventTypes.success,
-        })),
+        onLoading:log('on load'),
+        onFailed:log('on failed'),
+        onSuccess:log('on success')
+
       },
       services: services
     }

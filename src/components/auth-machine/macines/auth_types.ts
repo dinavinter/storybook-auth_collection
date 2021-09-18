@@ -11,8 +11,8 @@ declare type User = {
 export declare type AuthRequest = any
 
 export declare type AuthResult = false | {
-  idToken: IdToken,
-  accessToken: AccessToken,
-  user: User
+  idToken?: IdToken,
+  accessToken?: AccessToken,
+  user?: User
   auth: 'auth'
 }

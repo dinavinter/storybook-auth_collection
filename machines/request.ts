@@ -3,17 +3,7 @@ import {assign, send, actions, createMachine} from 'xstate';
 // import {StateMachine} from "xstate/es";
 const {log} = actions;
 
-// interface RequestStates {
-//   states: {
-//     idle: {};
-//     pending: {};
-//     successful: {};
-//     failed: {};
-//   };
-// }
 
-
-// type Fetcher<TRequest, TResult> = (request: TRequest) => Promise<TResult>;
 export type RequestMachineEvents<TRequest, TResult> =
   | { type: 'FETCH', request: TRequest }
   | { type: 'RESOLVE'; result: TResult }

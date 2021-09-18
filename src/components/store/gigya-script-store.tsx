@@ -1,5 +1,11 @@
 import {createStore} from "@stencil/store";
 
+export declare type LoginDetails<TContext extends any = any> = {
+  provider: string;
+  uid: string;
+  context: TContext;
+}
+
 export declare type GigyaSdk = {
   socialize: any,
   accounts: any,
@@ -7,7 +13,8 @@ export declare type GigyaSdk = {
   // loaded: boolean,
   apiKey: string,
   showScreenSet: (args: any) => void
-  showDebugUI:() => void
+  showDebugUI: () => void,
+  // onLogin?: ({provider, uid, context}) => void
   // screenSet: ScreenSetController
 }
 
@@ -56,8 +63,24 @@ onChange('gigya', gigya => {
   console.log(gigya)
 })
 
+export function onLogin(cb: (details: LoginDetails) => void) {
+  onGigyaService(({gigya}) => {
+    gigya.socialize.addEventHandlers({
+      context: {str: 'congrats on your'}
+      , onLogin: cb
+    });
+  })
+}
+
+export function waitForLogin(): Promise<LoginDetails> {
+  return new Promise((resolve) => {
+    onLogin(details => resolve(details))
+  })
+}
+
 function onGigyaService(cb: (gigya: GigyaSdk) => void) {
   function sdk(gigya) {
+
     return {
       gigya: gigya,
       socialize: gigya.socialize,
@@ -66,9 +89,10 @@ function onGigyaService(cb: (gigya: GigyaSdk) => void) {
       showScreenSet: (args) => {
         gigya.accounts.showScreenSet(args)
       },
-      showDebugUI: ( ) =>  {
-         gigya.showDebugUI()
+      showDebugUI: () => {
+        gigya.showDebugUI()
       }
+
     };
   }
 
@@ -79,6 +103,18 @@ function onGigyaService(cb: (gigya: GigyaSdk) => void) {
   })
 }
 
+// window.gigya.accounts.getAccountInfo({
+//   callback: function (res) {
+//     if (res.errorCode === 0) {
+//       setAccount(res);
+//       setIsLoggedIn(true);
+//
+//     }
+//     setGigya(window.gigya);
+//
+//   }
+// });
+//
 
 if (window.gigya) {
   loadGigyaService();

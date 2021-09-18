@@ -114,44 +114,100 @@ import {authStorageMachine} from "./auth";
 // import {createMachine, send, actions} from "xstate";
 import {assign, createMachine, send, spawn, actions} from "xstate";
 import {RequestMachineEventTypes} from "./request";
+import {createAuthNMachine} from "./authN";
+// import interactionDialogMachine from "./interaction";
+import {interactionMachine} from "../../interaction-machine/machine";
 
 const {log} = actions;
 
 
+const authNMachine = createAuthNMachine();
 const authStorage = authStorageMachine();
 export const authClientMachine = createMachine<{
-  authStorage: null
+  authStorage: null,
+  authNMachine: null,
+  interactionMachine: any,
 }>({
   id: 'client',
   initial: 'idle',
   context: {
-    authStorage: null
+    authStorage: null,
+    authNMachine: null,
+    interactionMachine: null
+  },
+  on: {
+    AUTH: {
+      target: 'authorizing',
+    },
+    INTERACTION: [
+      {
+        target: 'interaction',
+      }
+    ]
   },
   states: {
     idle: {
       on: {
         AUTH: {
           target: 'authorizing',
-       }
-    }},
+        }
+      }
+    },
+
+    interaction:{
+
+      entry:[log("interaction - event"),
+        assign({
+          interactionMachine: () => spawn(interactionMachine, {sync: true, name: `interaction-machine`})
+        }),
+        send((_c, event) => ({...event, type: RequestMachineEventTypes.send}), {
+          to: (context) => context.interactionMachine
+        })],
+      invoke: {
+          src:(c)=>c.interactionMachine,
+          autoForward:true
+      }},
+
     authorizing: {
       entry: [log("authorizing - entry"),
         assign({
-          authStorage: () => spawn(authStorage, { sync: true, name:`auth-storage` })
+          authStorage: () => spawn(authStorage, {sync: true, name: `auth-storage`})
         }),
-        send((_c, event) => ({ ...event, type: RequestMachineEventTypes.send }), {
+        send((_c, event) => ({...event, type: RequestMachineEventTypes.send}), {
           to: (context) => context.authStorage
         })],
-       on: {
-        [RequestMachineEventTypes.success]: {target: 'authorized'},
-        [RequestMachineEventTypes.failed]: {target: 'not-authorized'}
+      on: {
+        [RequestMachineEventTypes.success]: {target: 'authenticated'},
+        [RequestMachineEventTypes.failed]: {target: 'login'}
       }
     },
-    authorized: {
+    authenticated: {
       // type: 'final'
     },
-    ['not-authorized']: {
-      // type: 'final'
+    login:{
+      entry:[log("login - event"),
+        assign({
+          interactionMachine: () => spawn(interactionMachine, {sync: true, name: `interaction-machine`})
+        }),
+        send((_c) => ({request:{interaction: 'login'}, type: RequestMachineEventTypes.send}), {
+          to: (context) => context.interactionMachine
+        })],
+      invoke: {
+        src:(c)=>c.interactionMachine,
+        autoForward:true
+      }},
+    notAuthenticated: {
+      entry: [log('notAuthenticated-entry'),
+        assign({
+          authNMachine: () => spawn(authNMachine, {sync: true, name: `authN-machine`})
+        }),
+        send((_c, event) => ({...event, type: RequestMachineEventTypes.send}), {
+          to: (context) => context.authNMachine
+        })],
+      on: {
+        [RequestMachineEventTypes.success]: {target: 'authorizing'},
+        [RequestMachineEventTypes.failed]: {target: 'idle'}
+      }
     }
   }
 });

@@ -1,6 +1,22 @@
 import {h, VNode} from "@stencil/core";
 
-export class ScreenSetRoute {
+declare interface AuthScreen {
+  path: string
+
+  render(sel: any): VNode
+}
+
+
+declare interface AuthScreens<TAuthScreen extends AuthScreen> {
+  profile: TAuthScreen
+  register: TAuthScreen;
+  login: TAuthScreen;
+  subscribe: TAuthScreen;
+
+  Enumerate(): AuthRoute[]
+}
+
+export class ScreenSetRoute implements AuthScreen {
 
   constructor(path: string, screen_set: string, start_screen?: string) {
     this.screen_set = screen_set;
@@ -27,22 +43,28 @@ export class ScreenSetRoute {
   }
 }
 
+class GigyaScreens implements AuthScreens<ScreenSetRoute> {
+  public profile: ScreenSetRoute;
+  public register: ScreenSetRoute;
+  public login: ScreenSetRoute;
+  public subscribe: ScreenSetRoute;
 
-const screens = function () {
+  constructor() {
+    this.profile = new ScreenSetRoute("/_gs/profile", "Default-ProfileUpdate", 'gigya-update-profile-screen');
+    this.register = new ScreenSetRoute("/_gs/register", "Default-RegistrationLogin", 'gigya-register-screen');
+    this.login = new ScreenSetRoute("/_gs/login", "Default-RegistrationLogin", 'gigya-login-screen'),
+      this.subscribe = new ScreenSetRoute("/_gs/lite", "Default-LiteRegistration")
 
-  return [
-    new ScreenSetRoute("/_gs/profile", "Default-ProfileUpdate", 'gigya-update-profile-screen' ),
-    new ScreenSetRoute("/_gs/register","Default-RegistrationLogin", 'gigya-register-screen'),
-    new ScreenSetRoute( "/_gs/login","Default-RegistrationLogin", 'gigya-login-screen'),
-    new ScreenSetRoute("/_gs/lite", "Default-LiteRegistration"),
-  ]
+  }
 
-}
-
-function  ScreenSetRouter():AuthRoute[] {
-  return screens().map(screen => {
-    return screen.route()
-  });
+  Enumerate(): AuthRoute[] {
+    return [
+      this.profile.route(),
+      this.register.route(),
+      this.login.route(),
+      this.subscribe.route(),
+    ]
+  }
 
 }
 
@@ -55,6 +77,5 @@ export interface AuthRoute {
   render(sel: any): VNode
 }
 
-
-export const Routes = ScreenSetRouter();
+export const AuthScreens = new GigyaScreens();
 

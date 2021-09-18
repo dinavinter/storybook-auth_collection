@@ -1,10 +1,13 @@
 // import {InspectorViz} from '@xstate/viz';
 
-import {h, Component, ComponentInterface, State, Prop} from '@stencil/core';
+import {h, Component, ComponentInterface, State, Prop, Host} from '@stencil/core';
 import {authenticationMachine} from './machine'
-import {interpret} from "xstate";
+import {interpret, Interpreter} from "xstate";
 import {AuthRequest} from "./macines/auth_types";
-// const { respond } = actions;
+import {InteractionMachineContext} from "../interaction-machine/machine";
+  import { MachineServiceContext} from "../context/MachineContext";
+ // const { respond } = actions;
+import Tunnel from '../context/useMachineService'; // Import the Tunnel
 
 // const withAuthNService :RequestMachineConfigurator<any, any> =(machine, _services)=> {
 //   return machine.withConfig({
@@ -52,14 +55,18 @@ import {AuthRequest} from "./macines/auth_types";
 
 @Component({
   tag: 'auth-machine',
-  shadow: false
+  shadow: true
 })
 export class AuthMachine implements ComponentInterface {
 
+  private _service = interpret(authenticationMachine, {
+    devTools: true,
 
-  private _service = interpret(authenticationMachine, {devTools: true});
+  });
 
   @State() state = authenticationMachine.initialState;
+  @State() interaction;
+  @State() interactionService: Interpreter<InteractionMachineContext, any, any, any>;
   @State() authStorageState = authenticationMachine.initialState;
   @Prop() request: AuthRequest;
   @Prop() event: MessageEvent;
@@ -69,11 +76,20 @@ export class AuthMachine implements ComponentInterface {
     this._service.subscribe(state => {
       this.state = state;
     });
+
     this._service.onTransition((state) => {
-      const {authStorage} = state.context;
-      if(authStorage != null) { // @ts-ignore
-        this.authStorageState=  authStorage.state;
+      const {authStorage, interactionMachine} = state.context;
+      if (authStorage != null) { // @ts-ignore
+        this.authStorageState = authStorage.state;
       }
+      if (interactionMachine) {
+        this.interactionService = interactionMachine;
+        console.log(this.interactionService);
+
+      }
+
+
+
     });
 
     this._service.start();
@@ -90,27 +106,44 @@ export class AuthMachine implements ComponentInterface {
 
   render() {
     const {send} = this._service;
-     // InspectorViz({receiver:MachineViz})
+    // InspectorViz({receiver:MachineViz})
     // const reciver :{
     //   receive: (listener: (e: MessageEvent) => void) => void;
     //
     // }
+    const interactionProvider: MachineServiceContext = {
+      service:this.interactionService, name:'interaction'
+    };
     return (
-      <div>
-        <button onClick={() => send({type: "AUTH", request: this.request})}>Send</button>
-        <p>
-          {JSON.stringify(this.state && this.state.context || this.state)}
-          auth storage
-          {JSON.stringify(this.authStorageState && this.authStorageState.context || this.authStorageState)}
 
-        </p>
-        {/*<InspectorViz receiver={ {receive:(e) =>{*/}
-        {/*  console.log(e)*/}
-        {/*}}}>*/}
-        {/*  Last Event: {this.event}*/}
-        {/*</InspectorViz>*/}
-       </div>
+      <Host>
+        <button onClick={() => send({type: "AUTH", request: this.request})}>Send</button>
+
+        <Tunnel.Provider state={interactionProvider}  >
+          <slot name={'interaction'}  />
+        </Tunnel.Provider>
+
+      </Host>
 
     );
   }
+
+  // private setInteractionMachine(machine) {
+  //   if (this.interactionService) {
+  //     machine.interactionService = this.interactionService;
+  //     console.log('set interaction service');
+  //
+  //   }
+  //   machine.interactionService = this.interactionService;
+  //   this._service.onTransition((state) => {
+  //     const {interactionMachine} = state.context;
+  //     if (interactionMachine) {
+  //       machine.interactionService = this.interactionService;
+  //       console.log('set interaction service');
+  //
+  //     }
+  //
+  //
+  //   })
+  // }
 }

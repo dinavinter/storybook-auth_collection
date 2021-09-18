@@ -4,8 +4,8 @@ import EVENTS from './events';
 // import {checkAuth, login, logout} from './authService';
 
 // https://xstate.js.org/viz/?gist=94e9a29e1ab016e06b8b354b9d558cf2
-
-const createAuthNMachine = ({checkAuth, login, logout, register, retrieveUser}) =>
+// {checkAuth, login, logout, register, retrieveUser}
+const createAuthNMachine = () =>
   createMachine({
     id: 'authN-machine',
     initial:  'idle',
@@ -29,7 +29,7 @@ const createAuthNMachine = ({checkAuth, login, logout, register, retrieveUser}) 
           [STATES.AUTHENTICATE.LOADING]: {
             invoke: {
               id: 'authenticationService',
-              src: (_, event) => checkAuth(event.data),
+              src: 'checkAuth',
               onDone: {
                 target: STATES.AUTHENTICATE.SUCCESS,
                 actions: assign({
@@ -72,7 +72,7 @@ const createAuthNMachine = ({checkAuth, login, logout, register, retrieveUser}) 
           [STATES.REGISTER.LOADING]: {
             invoke: {
               id: 'registerService',
-              src: (_, _e) => register(),
+              src: 'register',
               onDone: {
                 target: STATES.REGISTER.SUCCESS,
                 actions: assign({
@@ -114,7 +114,7 @@ const createAuthNMachine = ({checkAuth, login, logout, register, retrieveUser}) 
           [STATES.LOGIN.LOADING]: {
             invoke: {
               id: 'loginService',
-              src: (_, event) => login(event.data),
+              src:'login',
               onDone: {
                 target: STATES.LOGIN.SUCCESS,
                 actions: assign({
@@ -150,7 +150,7 @@ const createAuthNMachine = ({checkAuth, login, logout, register, retrieveUser}) 
                   [STATES.RETRIEVE_USER.LOADING]: {
                     invoke: {
                       id: 'retrieveUserService',
-                      src: () => retrieveUser(),
+                      src: 'getUser',
                       onDone: {
                         target: STATES.RETRIEVE_USER.SUCCESS,
                         actions: assign({
@@ -196,7 +196,7 @@ const createAuthNMachine = ({checkAuth, login, logout, register, retrieveUser}) 
           logout: {
             invoke: {
               id: 'logoutService',
-              src: () => logout(),
+              src: 'logout',
               onDone: {
                 target: '#authN-machine.idle',
                 actions: assign({

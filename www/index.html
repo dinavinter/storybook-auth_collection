@@ -1,4 +1,84 @@
-<!doctype html><html dir="ltr" lang="en"><head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"> <title>Stencil Component Starter</title> <meta name="theme-color" content="#16161d"> <meta name="apple-mobile-web-app-capable" content="yes"> <link href="/global/app.css" rel="stylesheet"> <link rel="modulepreload" href="/build/p-71af1c38.js"><script type="module" src="/build/p-71af1c38.js" data-stencil data-resources-url="/build/" data-stencil-namespace="gigya-auth-machine"></script> <script nomodule="" src="/build/gigya-auth-machine.js" data-stencil></script> </head> <body> <div> <gigya-store apikey="3_WKO1lFJ4yMz4MtnHK0d5AqgOCaU3KdYerHvETiMWD5IZ9qv5ccQmyC7qkICVchrQ" domain="gigya.com"> <!--  <gigya-screen screen_set="Default-RegistrationLogin"  start_screen="gigya-login-screen" ></gigya-screen>--> <!--    <router-link></router-link>--> <gigya-screen-router></gigya-screen-router> </gigya-store> <iframe data-xstate></iframe> <script src="./inspect.js" type="module"></script> <auth-machine margin="50 50 50 50"></auth-machine> </div> <script data-build="2021-09-17T03:05:53">
+<!doctype html><html dir="ltr" lang="en"><head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"/>--> <title>Stencil Component Starter</title> <meta name="theme-color" content="#16161d"> <meta name="apple-mobile-web-app-capable" content="yes"> <link href="/global/app.css" rel="stylesheet"> <script type="module" src="/build/gigya-auth-machine.esm.js" data-stencil></script> <script nomodule="" src="/build/gigya-auth-machine.js" data-stencil></script> <style>/** {*/
+    /*  box-sizing: border-box;*/
+    /*}*/
+
+    /*body {*/
+    /*  font-family: Arial, Helvetica, sans-serif;*/
+    /*}*/
+
+    /* Style the header */
+    header {
+      background-color: #666;
+      padding: 30px;
+      text-align: center;
+      font-size: 35px;
+      color: white;
+    }
+
+    /* Create two columns/boxes that floats next to each other */
+    nav {
+      float: left;
+      width: 30%;
+      height: 300px; /* only for demonstration, should be removed */
+      background: #ccc;
+      padding: 20px;
+    }
+
+    /* Style the list inside the menu */
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    article {
+      flex-grow: 4; /* default 0 */
+    }
+
+    /* Clear floats after the columns */
+    /*section::after {*/
+    /*  content: "";*/
+    /*  display: table;*/
+    /*  clear: both;*/
+    /*}*/
+
+    /* Style the footer */
+    footer {
+      background-color: #777;
+      padding: 10px;
+      text-align: center;
+      color: white;
+    }
+    aside {
+      float: right;
+    }
+    /* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+    @media (max-width: 600px) {
+      nav, article {
+        width: 100%;
+        height: auto;
+      }
+    }
+    .container {
+      display: flex; /* or inline-flex */
+      align-items:  stretch  ;
+      flex-flow: column ;
+
+      /* Then we define how is distributed the remaining space */
+      /*justify-content: space-around;*/
+
+    }
+    .viz{
+      flex-grow: 4; /* default 0 */
+      transition: margin-left .5s;
+      padding: 20px;
+      height: 600px;
+      /*box-sizing: content-box;*/
+
+    }
+    .machine{
+      flex-grow: 2; /* default 0 */
+
+    }</style> </head> <body> <gigya-store api-key="3_WKO1lFJ4yMz4MtnHK0d5AqgOCaU3KdYerHvETiMWD5IZ9qv5ccQmyC7qkICVchrQ" domain="gigya.com"> <ion-header> <ion-toolbar> <ion-buttons slot="start"> <ion-back-button></ion-back-button> </ion-buttons> </ion-toolbar> <router-link></router-link> </ion-header> <!--  <gigya-screen screen_set="Default-RegistrationLogin"  start_screen="gigya-login-screen" ></gigya-screen>--> <!--  <gigya-screen screen_set="Default-RegistrationLogin"  start_screen="gigya-login-screen" ></gigya-screen>--> <!--    <router-link></router-link>--> <!--  <ion-split-pane content-id="main">--> <!--    &lt;!&ndash;  the side menu  &ndash;&gt;--> <!--    <ion-menu content-id="main">--> <!--      <ion-header>--> <!--        <ion-toolbar>--> <!--          <ion-title>Menu</ion-title>--> <!--        </ion-toolbar>--> <!--      </ion-header>--> <!--    </ion-menu>--> <!--    &lt;!&ndash; the main content &ndash;&gt;--> <!--    <ion-content id="main">--> <!--      <h1>Hello</h1>--> <!--    </ion-content>--> <!--  </ion-split-pane>--> <!-- can be "xs", "sm", "md", "lg", or "xl" --> <!--  <gigya-screen-router>--> <!--  </gigya-screen-router>--> <!-- can be any valid media query https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries --> <div class="container"> <section> <auth-machine> <!--        <div slot="login">--> <!--        </div>--> <interaction-machine slot="interaction"> <gigya-screen slot="login" screen_set="Default-RegistrationLogin" start_screen="gigya-login-screen"></gigya-screen> </interaction-machine> </auth-machine> </section> <machine-context-provider data="data" machine="machine"> <machine-context-consumer></machine-context-consumer> </machine-context-provider> <!--  <iframe data-xstate></iframe>--> <section class="viz"> <xstate-viz></xstate-viz> </section> </div> <!--  <ion-row>--> <!--    <h1>Main Content</h1>--> <!--    <auth-machine margin="50 50 50 50"></auth-machine>--> <!--      <gigya-screen-router>--> <!--      </gigya-screen-router>--> <!--  </ion-row>--> <!--  <ion-row>--> <!--      <iframe data-xstate></iframe>--> </gigya-store> <script data-build="2021-09-18T15:02:55">
 if ('serviceWorker' in navigator && location.protocol !== 'file:') {
   window.addEventListener('load', function() {
   navigator.serviceWorker.register('/sw.js')

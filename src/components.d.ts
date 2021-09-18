@@ -8,6 +8,9 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { StateMachine } from "xstate/lib/types";
 import { AuthRequest } from "./components/auth-machine/macines/auth_types";
 import { GigyaConfig } from "./components/store/gigya-config-store";
+import { Interpreter } from "xstate";
+import { InteractionMachineContext } from "./components/interaction-machine/machine";
+import { Renderer, ServiceCallback } from "./components/xstate-service/xstate";
 export namespace Components {
     interface AnyMachine {
         "machine": StateMachine<any, any, any, any>;
@@ -36,7 +39,16 @@ export namespace Components {
         "apiKey": string;
         "domain": string;
     }
+    interface InteractionMachine {
+        "interaction": string;
+        "service": Interpreter<InteractionMachineContext, any, any, any>;
+    }
     interface LoadingMachine {
+    }
+    interface MachineConsumer {
+        "service": Interpreter<any, any, any, any>;
+    }
+    interface MachineContextConsumer {
     }
     interface PureBase {
     }
@@ -73,6 +85,19 @@ export namespace Components {
     interface RouterLink {
     }
     interface StepperMachine {
+    }
+    interface XstateService {
+        "callback"?: ServiceCallback;
+        /**
+          * Renderer callback
+         */
+        "renderer"?: Renderer<any>;
+        /**
+          * An XState service.
+         */
+        "service": Interpreter<any>;
+    }
+    interface XstateViz {
     }
 }
 declare global {
@@ -124,11 +149,29 @@ declare global {
         prototype: HTMLGigyaStoreElement;
         new (): HTMLGigyaStoreElement;
     };
+    interface HTMLInteractionMachineElement extends Components.InteractionMachine, HTMLStencilElement {
+    }
+    var HTMLInteractionMachineElement: {
+        prototype: HTMLInteractionMachineElement;
+        new (): HTMLInteractionMachineElement;
+    };
     interface HTMLLoadingMachineElement extends Components.LoadingMachine, HTMLStencilElement {
     }
     var HTMLLoadingMachineElement: {
         prototype: HTMLLoadingMachineElement;
         new (): HTMLLoadingMachineElement;
+    };
+    interface HTMLMachineConsumerElement extends Components.MachineConsumer, HTMLStencilElement {
+    }
+    var HTMLMachineConsumerElement: {
+        prototype: HTMLMachineConsumerElement;
+        new (): HTMLMachineConsumerElement;
+    };
+    interface HTMLMachineContextConsumerElement extends Components.MachineContextConsumer, HTMLStencilElement {
+    }
+    var HTMLMachineContextConsumerElement: {
+        prototype: HTMLMachineContextConsumerElement;
+        new (): HTMLMachineContextConsumerElement;
     };
     interface HTMLPureBaseElement extends Components.PureBase, HTMLStencilElement {
     }
@@ -154,6 +197,18 @@ declare global {
         prototype: HTMLStepperMachineElement;
         new (): HTMLStepperMachineElement;
     };
+    interface HTMLXstateServiceElement extends Components.XstateService, HTMLStencilElement {
+    }
+    var HTMLXstateServiceElement: {
+        prototype: HTMLXstateServiceElement;
+        new (): HTMLXstateServiceElement;
+    };
+    interface HTMLXstateVizElement extends Components.XstateViz, HTMLStencilElement {
+    }
+    var HTMLXstateVizElement: {
+        prototype: HTMLXstateVizElement;
+        new (): HTMLXstateVizElement;
+    };
     interface HTMLElementTagNameMap {
         "any-machine": HTMLAnyMachineElement;
         "auth-machine": HTMLAuthMachineElement;
@@ -163,11 +218,16 @@ declare global {
         "gigya-screen-router": HTMLGigyaScreenRouterElement;
         "gigya-sdk-store": HTMLGigyaSdkStoreElement;
         "gigya-store": HTMLGigyaStoreElement;
+        "interaction-machine": HTMLInteractionMachineElement;
         "loading-machine": HTMLLoadingMachineElement;
+        "machine-consumer": HTMLMachineConsumerElement;
+        "machine-context-consumer": HTMLMachineContextConsumerElement;
         "pure-base": HTMLPureBaseElement;
         "pure-button": HTMLPureButtonElement;
         "router-link": HTMLRouterLinkElement;
         "stepper-machine": HTMLStepperMachineElement;
+        "xstate-service": HTMLXstateServiceElement;
+        "xstate-viz": HTMLXstateVizElement;
     }
 }
 declare namespace LocalJSX {
@@ -199,7 +259,16 @@ declare namespace LocalJSX {
         "apiKey"?: string;
         "domain"?: string;
     }
+    interface InteractionMachine {
+        "interaction"?: string;
+        "service"?: Interpreter<InteractionMachineContext, any, any, any>;
+    }
     interface LoadingMachine {
+    }
+    interface MachineConsumer {
+        "service"?: Interpreter<any, any, any, any>;
+    }
+    interface MachineContextConsumer {
     }
     interface PureBase {
     }
@@ -234,8 +303,22 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface RouterLink {
+        "onBackgroundToggle"?: (event: CustomEvent<any>) => void;
     }
     interface StepperMachine {
+    }
+    interface XstateService {
+        "callback"?: ServiceCallback;
+        /**
+          * Renderer callback
+         */
+        "renderer"?: Renderer<any>;
+        /**
+          * An XState service.
+         */
+        "service": Interpreter<any>;
+    }
+    interface XstateViz {
     }
     interface IntrinsicElements {
         "any-machine": AnyMachine;
@@ -246,11 +329,16 @@ declare namespace LocalJSX {
         "gigya-screen-router": GigyaScreenRouter;
         "gigya-sdk-store": GigyaSdkStore;
         "gigya-store": GigyaStore;
+        "interaction-machine": InteractionMachine;
         "loading-machine": LoadingMachine;
+        "machine-consumer": MachineConsumer;
+        "machine-context-consumer": MachineContextConsumer;
         "pure-base": PureBase;
         "pure-button": PureButton;
         "router-link": RouterLink;
         "stepper-machine": StepperMachine;
+        "xstate-service": XstateService;
+        "xstate-viz": XstateViz;
     }
 }
 export { LocalJSX as JSX };
@@ -265,11 +353,16 @@ declare module "@stencil/core" {
             "gigya-screen-router": LocalJSX.GigyaScreenRouter & JSXBase.HTMLAttributes<HTMLGigyaScreenRouterElement>;
             "gigya-sdk-store": LocalJSX.GigyaSdkStore & JSXBase.HTMLAttributes<HTMLGigyaSdkStoreElement>;
             "gigya-store": LocalJSX.GigyaStore & JSXBase.HTMLAttributes<HTMLGigyaStoreElement>;
+            "interaction-machine": LocalJSX.InteractionMachine & JSXBase.HTMLAttributes<HTMLInteractionMachineElement>;
             "loading-machine": LocalJSX.LoadingMachine & JSXBase.HTMLAttributes<HTMLLoadingMachineElement>;
+            "machine-consumer": LocalJSX.MachineConsumer & JSXBase.HTMLAttributes<HTMLMachineConsumerElement>;
+            "machine-context-consumer": LocalJSX.MachineContextConsumer & JSXBase.HTMLAttributes<HTMLMachineContextConsumerElement>;
             "pure-base": LocalJSX.PureBase & JSXBase.HTMLAttributes<HTMLPureBaseElement>;
             "pure-button": LocalJSX.PureButton & JSXBase.HTMLAttributes<HTMLPureButtonElement>;
             "router-link": LocalJSX.RouterLink & JSXBase.HTMLAttributes<HTMLRouterLinkElement>;
             "stepper-machine": LocalJSX.StepperMachine & JSXBase.HTMLAttributes<HTMLStepperMachineElement>;
+            "xstate-service": LocalJSX.XstateService & JSXBase.HTMLAttributes<HTMLXstateServiceElement>;
+            "xstate-viz": LocalJSX.XstateViz & JSXBase.HTMLAttributes<HTMLXstateVizElement>;
         }
     }
 }

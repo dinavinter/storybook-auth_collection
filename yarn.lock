@@ -11085,6 +11085,11 @@ static-extend@^0.1.1:
   resolved "https://registry.npmjs.org/statuses/-/statuses-1.5.0.tgz#161c7dac177659fd9811f43771fa99381478628c"
   integrity sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
 
+stencil-context@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.npmjs.org/stencil-context/-/stencil-context-0.0.3.tgz#0ef992226d7f9d44d1f779d127d62dd8ef16f8b7"
+  integrity sha512-6sUWEWi0g+9hFvfgdkfHou+zANkOAGyloOC89lbaesf4c5Oe+NjSD36twCi2Ifr1Ffg6/7D5AgPxcmIALyErbA==
+
 stencil-router-v2@^0.6.0:
   version "0.6.0"
   resolved "https://registry.npmjs.org/stencil-router-v2/-/stencil-router-v2-0.6.0.tgz#3694f380bbe639a94a54b094799a334d503b03b5"
