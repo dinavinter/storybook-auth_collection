@@ -5,9 +5,10 @@ import {authenticationMachine} from './machine'
 import {interpret, Interpreter} from "xstate";
 import {AuthRequest} from "./macines/auth_types";
 import {InteractionMachineContext} from "../interaction-machine/machine";
-  import { MachineServiceContext} from "../context/MachineContext";
- // const { respond } = actions;
-import Tunnel from '../context/useMachineService'; // Import the Tunnel
+import {MachineServiceContext} from "../context/MachineContext";
+// const { respond } = actions;
+import Tunnel from '../context/useMachineService';
+import {StateRender} from "../xstate-service/xstate"; // Import the Tunnel
 
 // const withAuthNService :RequestMachineConfigurator<any, any> =(machine, _services)=> {
 //   return machine.withConfig({
@@ -116,19 +117,24 @@ export class AuthMachine implements ComponentInterface {
     //   receive: (listener: (e: MessageEvent) => void) => void;
     //
     // }
-    const interactionProvider: MachineServiceContext = {
-      service:this.interactionService, name:'interaction',
-      login:this.loginService
+    const services: MachineServiceContext = {
+      service: this.interactionService, name: 'interaction',
+      login: this.loginService
     };
     return (
 
       <Host>
-        <button onClick={() => send({type: "AUTH", request: this.request})}>Send</button>
-        <button onClick={() => send({type: "LOGIN", request: this.request})}>Login</button>
+        <Tunnel.Provider state={services}>
+          <button onClick={() => send({type: "AUTH", request: this.request})}>Send</button>
+          {/*<button onClick={() => send({type: "LOGIN", request: this.request})}>Login</button>*/}
+          <StateRender current={this.state} state={"notAuthenticated"}>
+            <button onClick={() => send({type: "LOGIN", request: this.request, to: 'login'})}>Login</button>
+          </StateRender>
+          <StateRender current={this.state} state={"login"}>
+            <slot name={'login'} />
+          </StateRender>
 
-
-        <Tunnel.Provider state={interactionProvider}  >
-          <slot name={'interaction'}  />
+          <slot name={'interaction'} />
         </Tunnel.Provider>
 
       </Host>

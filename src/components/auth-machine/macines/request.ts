@@ -187,9 +187,9 @@ export function createRequestMachine<TRequest extends AnyRequestObject = AnyRequ
     },
     {
       actions: {
-        assignLoadService: assign((_) => ({
-          loginService:  new Subject<SuccessEvent | RejectEvent>(),
-        })),
+        // assignLoadService: assign((_) => ({
+        //   loginService:  new Subject<SuccessEvent | RejectEvent>(),
+        // })),
         setRequest: assign((_, event: any) => ({
           request: event.request,
         })),
@@ -231,17 +231,18 @@ export function createRequestMachine<TRequest extends AnyRequestObject = AnyRequ
       }
     }
   );
+  function createBeepingActivity(_c, _) {
+    // Start the beeping activity
+    const interval = setInterval(() => {
+      console.log('BEEP!' + `request.${machineId}`);
+    }, 400);
+
+    // Return a function that stops the beeping activity
+    return () => clearInterval(interval);
+  }
+
+
 }
 
 
-
-function createBeepingActivity(context, _) {
-  // Start the beeping activity
-  const interval = setInterval(() => {
-    console.log('BEEP!');
-  }, context.interval);
-
-  // Return a function that stops the beeping activity
-  return () => clearInterval(interval);
-}
 

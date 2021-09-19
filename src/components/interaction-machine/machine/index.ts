@@ -2,7 +2,6 @@ import {requestMachine, RequestMachineContext} from "../../auth-machine/macines/
 import {assign} from "xstate";
 import {RequestMachineEvents} from "../../../../machines/request";
 import {MachineState} from "../../xstate-service/xstate";
-import {loginMachine} from "../../loading-machine/machine";
 // import {actions, assign} from "xstate";
  // const {log} = actions;
 
@@ -77,10 +76,7 @@ export const interactionMachine = requestMachine<InteractionRequest>("Interactio
       };
     }),
 
-    },
-  services:{
-    loadService:loginMachine
-  }
+    }
 
 
 }  );

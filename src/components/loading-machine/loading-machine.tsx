@@ -61,59 +61,34 @@ export class LoadingMachine {
 
   }
 
+
+
+
   componentWillLoad() {
-    this.login.subscribe(state => {
-      console.log(state.value);
+    if(this.login){
+      console.log("login service exists");
+      this.login.subscribe(state => {
+        console.log(state.value);
+      });
+    }
+
+    onLogin(details => {
+      console.log('on login',this.login.state.context)
+      this.login.state.context.loadService.next({type: 'RESOLVE', result: details});
+      // this.resolver.complete();
     });
 
-    // this._service.start();
-  }
-
-
-
-   loginCallback(details) {
-    console.log('on login')
-    console.log( this.service);
-    debugger;
-    this.service.send( { type: 'RESOLVE' , result:details, to:'loading'});
-    // this.service.state.context.callback(details);
 
   }
-
-  waitForLogin=(send)=> {
-
-    onLogin((details)=>  {
-      console.log('on login')
-      console.log( this.service);
-      // debugger;
-
-      send( { type: 'RESOLVE' , result:details});});
-
-
-    return <div></div>;
-  }
-
 
   render() {
 
     // const WaitForLogin = this.service && this.waitForLogin( this.service.send);
     return (
       <Host>
-        {this.login &&
-        <div>
-          {/*<WaitForLogin send={ this.service.send}  />*/}
-
-          <xstate-service service={this.login} >
-          </xstate-service>
-
-          <xstate-service service={this.login}  >
-          </xstate-service>
-        </div>}
-
         <interaction-machine slot="interaction">
           <div slot="login">
             <gigya-screen screen_set="Default-RegistrationLogin" start_screen="gigya-login-screen"></gigya-screen>
-            {/*{this.service && <WaitForLogin service={this.service}/>}*/}
           </div>
 
         </interaction-machine>

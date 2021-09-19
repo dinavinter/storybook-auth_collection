@@ -8,6 +8,9 @@ function session(): AuthResult {
   else return false;
 }
 
+export function setAuth(auth:AuthResult){
+  localStorage.setItem('auth.state', JSON.stringify(auth) )
+}
 
 
 function checkAuth(
@@ -29,5 +32,5 @@ function checkAuth(
 export const authStorageMachine = (r?: { provider: string }) => {
   return createRequestMachine<AuthRequest, AuthResult>(r, {
     loadService: checkAuth,
-  })
+  });
 }

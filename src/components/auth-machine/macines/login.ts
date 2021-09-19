@@ -1,96 +1,13 @@
-import { assign, createMachine } from 'xstate';
+import {requestMachine} from "./request";
+import {AuthRequest, AuthResult} from "./auth_types";
+import {setAuth} from "./auth";
 
-export interface LoginDialogMachineContext {
-  action?: () => Promise<void>;
-  errorMessage?: string;
-}
+export const loginMachine = requestMachine<AuthRequest, AuthResult>("login-service").withConfig({
+  actions:{
+    onSuccess: (context,_) => {
+      setAuth({...context.result, authenticated:true})
 
-type LoginDialogMachineEvent =
-  | {
-  type: 'OPEN_DIALOG';
-  action: () => Promise<void>;
-}
-  | {
-  type: 'CONFIRM';
-}
-  | {
-  type: 'CANCEL';
-};
-
-const loginDialogMachine = createMachine<
-  LoginDialogMachineContext,
-  LoginDialogMachineEvent
-  >(
-  {
-    id: 'loginDialog',
-    initial: 'closed',
-    states: {
-      closed: {
-        id: 'closed',
-        on: {
-          OPEN_DIALOG: {
-            target: 'open',
-            actions: 'assignActionToContext',
-          },
-        },
-      },
-      open: {
-        exit: ['clearErrorMessage'],
-        initial: 'idle',
-        states: {
-          idle: {
-            on: {
-              CANCEL: '#closed',
-              CONFIRM: 'executingAction',
-            },
-          },
-          executingAction: {
-            invoke: {
-              src: 'executeAction',
-              onError: {
-                target: 'idle',
-                actions: 'assignErrorMessageToContext',
-              },
-              onDone: {
-                target: '#closed',
-                actions: ['clearActionFromContext', 'onSuccess'],
-              },
-            },
-          },
-        },
-      },
     },
-  },
-  {
-    services: {
-      executeAction: (_) => () => {
-        // For demonstration purposes, I've commented this out.
-        // await context.action()
-      },
-    },
-    actions: {
-      assignActionToContext: assign((_, event) => {
-        if (event.type !== 'OPEN_DIALOG') return {};
-        return {
-          action: event.action,
-        };
-      }),
-      assignErrorMessageToContext: assign((_, event: any) => {
-        return {
-          errorMessage: event.data?.message || 'An unknown error occurred',
-        };
-      }),
-      clearErrorMessage: assign({
-        errorMessage: undefined,
-      }),
-      clearActionFromContext: assign({
-        action: undefined,
-      }),
-      onSuccess: () => {
-        alert('onSuccess fired!');
-      },
-    },
-  },
-);
 
-export default loginDialogMachine;
+  }
+});

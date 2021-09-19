@@ -144,8 +144,11 @@
   <div class="container">
     <section>
       <auth-machine>
+<!--        <login-machine slot="interaction">-->
+        <gigya-login slot="login" />
+
+<!--        </login-machine>-->
         <interaction-machine slot="interaction">
-          <gigya-login slot="login" />
         </interaction-machine>
       </auth-machine>
       <!--    <auth-machine >-->

@@ -3,6 +3,7 @@ import {RequestMachineEvents} from "../../../../machines/request";
 import {MachineState} from "../../xstate-service/xstate";
 import {InteractionRequest} from "../../interaction-machine/machine";
 import {LoginCallback, LoginDetails} from "../../store/gigya-script-store";
+import {loginService} from "../../auth-machine/macines/authorize";
 // import {actions, assign} from "xstate";
 // const {log} = actions;
 
@@ -33,9 +34,20 @@ export interface GigyaLoginResponse extends LoginDetails {
 
 export const loginMachine = requestMachine<LoginRequest, GigyaLoginResponse>("gigya-login").withConfig({
 
+actions:{
+  onSuccess: (context, _)=>{
+    loginService.next({type: 'RESOLVE', result: context.result});
 
+  },
+  onError: (context, _)=>{
+    loginService.next({type: 'REJECT', error: context.error});
+
+  }
+}
 
 });
+
+
 
 
 

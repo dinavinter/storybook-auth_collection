@@ -5,7 +5,6 @@ import {AuthRequest, AuthResult} from "./auth_types";
 // import {Router} from "../../../router";
 // import {waitForLogin} from "../../store/gigya-script-store";
 import {sendParent} from "xstate";
-import loginDialogMachine from "./login";
 
 // async function navigateToAuthPage(
 //  ) {
@@ -22,7 +21,6 @@ import loginDialogMachine from "./login";
 
 export const createAuthNMachine = (r?: { provider: string }) => {
   return createRequestMachine<AuthRequest, AuthResult>(r, {
-    loadService: loginDialogMachine
   },  'authNDialog').withConfig({
     actions:{
       onLoading: sendParent({type:"LOGIN" , interaction: 'login'})
