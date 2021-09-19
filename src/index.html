@@ -64,9 +64,11 @@
       text-align: center;
       color: white;
     }
+
     aside {
       float: right;
     }
+
     /* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
     @media (max-width: 600px) {
       nav, article {
@@ -74,16 +76,18 @@
         height: auto;
       }
     }
+
     .container {
       display: flex; /* or inline-flex */
-      align-items:  stretch  ;
-      flex-flow: column ;
+      align-items: stretch;
+      flex-flow: column;
 
       /* Then we define how is distributed the remaining space */
       /*justify-content: space-around;*/
 
     }
-    .viz{
+
+    .viz {
       flex-grow: 4; /* default 0 */
       transition: margin-left .5s;
       padding: 20px;
@@ -91,7 +95,8 @@
       /*box-sizing: content-box;*/
 
     }
-    .machine{
+
+    .machine {
       flex-grow: 2; /* default 0 */
 
     }
@@ -113,7 +118,6 @@
   </ion-header>
 
 
-  <!--  <gigya-screen screen_set="Default-RegistrationLogin"  start_screen="gigya-login-screen" ></gigya-screen>-->
   <!--  <gigya-screen screen_set="Default-RegistrationLogin"  start_screen="gigya-login-screen" ></gigya-screen>-->
   <!--    <router-link></router-link>-->
   <!--  <ion-split-pane content-id="main">-->
@@ -137,30 +141,42 @@
 
   <!--  </gigya-screen-router>-->
   <!-- can be any valid media query https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries -->
-<div class="container">
-<section>
-    <auth-machine >
-<!--        <div slot="login">-->
-<!--        </div>-->
-      <interaction-machine slot="interaction">
-           <gigya-screen slot="login" screen_set="Default-RegistrationLogin"  start_screen="gigya-login-screen"></gigya-screen>
-      </interaction-machine>
+  <div class="container">
+    <section>
+      <auth-machine>
+        <interaction-machine slot="interaction">
+          <gigya-login slot="login" />
+        </interaction-machine>
+      </auth-machine>
+      <!--    <auth-machine >-->
+      <!--&lt;!&ndash;        <div slot="login">&ndash;&gt;-->
+      <!--&lt;!&ndash;        </div>&ndash;&gt;-->
+      <!--      <login-machine slot="interaction">-->
+      <!--&lt;!&ndash;           <gigya-screen slot="view" screen_set="Default-RegistrationLogin"  start_screen="gigya-login-screen"></gigya-screen>&ndash;&gt;-->
 
-    </auth-machine>
-</section>
-<machine-context-provider data="data" machine="machine">
-  <machine-context-consumer>
+      <!--      </login-machine>-->
+      <!--      <interaction-machine slot="interaction" >-->
+      <!--&lt;!&ndash;        <login-machine slot="interaction">&ndash;&gt;-->
 
-  </machine-context-consumer>
-</machine-context-provider>
+      <!--&lt;!&ndash;        </login-machine>&ndash;&gt;-->
+      <!--&lt;!&ndash;           <gigya-screen slot="login" screen_set="Default-RegistrationLogin"  start_screen="gigya-login-screen"></gigya-screen>&ndash;&gt;-->
+      <!--      </interaction-machine>-->
+
+      <!--    </auth-machine>-->
+    </section>
+    <!--<machine-context-provider data="data" machine="machine">-->
+    <!--  <machine-context-consumer>-->
+
+    <!--  </machine-context-consumer>-->
+    <!--</machine-context-provider>-->
 
     <!--  <iframe data-xstate></iframe>-->
-  <section class="viz">
-    <xstate-viz ></xstate-viz>
-  </section>
+    <section class="viz">
+      <xstate-viz></xstate-viz>
+    </section>
 
 
-</div>
+  </div>
   <!--  <ion-row>-->
   <!--    <h1>Main Content</h1>-->
   <!--    <auth-machine margin="50 50 50 50"></auth-machine>-->

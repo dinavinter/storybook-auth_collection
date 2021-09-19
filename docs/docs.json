@@ -1,5 +1,5 @@
 {
-  "timestamp": "2021-09-17T03:16:01",
+  "timestamp": "2021-09-19T17:57:39",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.8.0",
@@ -43,7 +43,7 @@
     },
     {
       "filePath": "./src/components/auth-machine/auth-machine.tsx",
-      "encapsulation": "none",
+      "encapsulation": "shadow",
       "tag": "auth-machine",
       "readme": "# auth-machine\r\n\r\n\r\n\r",
       "docs": "",
@@ -89,8 +89,14 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [],
-      "dependencyGraph": {}
+      "dependencies": [
+        "context-consumer"
+      ],
+      "dependencyGraph": {
+        "auth-machine": [
+          "context-consumer"
+        ]
+      }
     },
     {
       "filePath": "./src/components/gigya-configuration/gigya-configuration.tsx",
@@ -161,6 +167,31 @@
       "dependencyGraph": {}
     },
     {
+      "filePath": "./src/components/gigya-login/gigya-login.tsx",
+      "encapsulation": "none",
+      "tag": "gigya-login",
+      "readme": "# gigya-login\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "gigya-screen"
+      ],
+      "dependencyGraph": {
+        "gigya-login": [
+          "gigya-screen"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/gigya-screen/gigya-screen.tsx",
       "encapsulation": "none",
       "tag": "gigya-screen",
@@ -209,11 +240,19 @@
       "slots": [],
       "parts": [],
       "dependents": [
-        "gigya-screen-router"
+        "gigya-login",
+        "gigya-screen-router",
+        "login-machine"
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "gigya-login": [
+          "gigya-screen"
+        ],
         "gigya-screen-router": [
+          "gigya-screen"
+        ],
+        "login-machine": [
           "gigya-screen"
         ]
       }
@@ -401,10 +440,228 @@
       "dependencyGraph": {}
     },
     {
-      "filePath": "./src/components/loading-machine/loading-machine.tsx",
+      "filePath": "./src/components/interaction-machine/interaction-machine.tsx",
       "encapsulation": "shadow",
-      "tag": "loading-machine",
+      "tag": "interaction-machine",
+      "readme": "# interaction-machine\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "interaction",
+          "type": "string",
+          "mutable": true,
+          "attr": "interaction",
+          "reflectToAttr": true,
+          "docs": "",
+          "docsTags": [],
+          "default": "'None'",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "loadService",
+          "type": "(service: ServiceConfig<any, AnyEventObject>) => void",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "(service: ServiceConfig<any, AnyEventObject>) => void"
+            }
+          ],
+          "optional": true,
+          "required": false
+        },
+        {
+          "name": "service",
+          "type": "Interpreter<InteractionMachineContext, any, any, any>",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Interpreter<InteractionMachineContext, any, any, any>"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "state",
+          "type": "State<InteractionMachineContext, InteractionMachineEvent, any, { value: any; context: InteractionMachineContext; }>",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "State<InteractionMachineContext, InteractionMachineEvent, any, { value: any; context: InteractionMachineContext; }>"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "resolve",
+          "detail": "any",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "login-machine"
+      ],
+      "dependencies": [
+        "xstate-service",
+        "context-consumer"
+      ],
+      "dependencyGraph": {
+        "interaction-machine": [
+          "xstate-service",
+          "context-consumer"
+        ],
+        "login-machine": [
+          "interaction-machine"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/loading-machine/loading-machine.tsx",
+      "encapsulation": "none",
+      "tag": "login-machine",
       "readme": "# loading-machine\r\n\r\n\r\n\r",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "login",
+          "type": "Interpreter<InteractionMachineContext, any, any, any>",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Interpreter<InteractionMachineContext, any, any, any>"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "service",
+          "type": "Interpreter<InteractionMachineContext, any, any, any>",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Interpreter<InteractionMachineContext, any, any, any>"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [
+        {
+          "event": "onReady",
+          "capture": false,
+          "passive": false
+        }
+      ],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "xstate-service",
+        "interaction-machine",
+        "gigya-screen",
+        "context-consumer"
+      ],
+      "dependencyGraph": {
+        "login-machine": [
+          "xstate-service",
+          "interaction-machine",
+          "gigya-screen",
+          "context-consumer"
+        ],
+        "interaction-machine": [
+          "xstate-service",
+          "context-consumer"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/machine-context-provider/machine-context-provider.tsx",
+      "encapsulation": "shadow",
+      "tag": "machine-consumer",
+      "readme": "# machine-consumer\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "service",
+          "type": "Interpreter<any, any, any, any>",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Interpreter<any, any, any, any>"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "context-consumer"
+      ],
+      "dependencyGraph": {
+        "machine-consumer": [
+          "context-consumer"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/machine-context-consumer/machine-context-consumer.tsx",
+      "encapsulation": "none",
+      "tag": "machine-context-consumer",
+      "readme": "# machine-context-consumer\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -416,8 +673,14 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [],
-      "dependencyGraph": {}
+      "dependencies": [
+        "my-component-grandchild"
+      ],
+      "dependencyGraph": {
+        "machine-context-consumer": [
+          "my-component-grandchild"
+        ]
+      }
     },
     {
       "filePath": "./src/components/pure-base/pure-base.tsx",
@@ -589,8 +852,24 @@
       "usage": {},
       "props": [],
       "methods": [],
-      "events": [],
-      "listeners": [],
+      "events": [
+        {
+          "event": "backgroundToggle",
+          "detail": "any",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [
+        {
+          "event": "backgroundToggle",
+          "capture": false,
+          "passive": false
+        }
+      ],
       "styles": [],
       "slots": [],
       "parts": [],
@@ -603,6 +882,119 @@
       "encapsulation": "none",
       "tag": "stepper-machine",
       "readme": "# stepper-machine\r\n\r\n\r\n\r",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/xstate-service/xstate-service.tsx",
+      "encapsulation": "none",
+      "tag": "xstate-service",
+      "readme": "# xstate-service\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "callback",
+          "type": "<TContext, TSchema, TEvent extends EventObject = EventObject>(arg: { current: State<TContext, EventObject, any, { value: any; context: TContext; }>; send: (event: SingleOrArray<Event<TEvent>> | Event<TEvent>, payload?: EventData) => State<TContext, TEvent, TSchema, { value: any; context: TContext; }>; service: Interpreter<TContext, TSchema, TEvent, { value: any; context: TContext; }>; }) => void",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "<TContext, TSchema, TEvent extends EventObject = EventObject>(arg: { current: State<TContext, EventObject, any, { value: any; context: TContext; }>; send: (event: SingleOrArray<Event<TEvent>>"
+            },
+            {
+              "type": "Event<TEvent>, payload?: EventData) => State<TContext, TEvent, TSchema, { value: any; context: TContext; }>; service: Interpreter<TContext, TSchema, TEvent, { value: any; context: TContext; }>; }) => void"
+            }
+          ],
+          "optional": true,
+          "required": false
+        },
+        {
+          "name": "renderer",
+          "type": "(current: State<any, EventObject, any, { value: any; context: any; }>, send: (event: SingleOrArray<Event<EventObject>> | Event<EventObject>, payload?: EventData) => State<any, EventObject, any, { value: any; context: any; }>, service: Interpreter<any, any, EventObject, { value: any; context: any; }>) => Element | Element[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Renderer callback",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "(current: State<any, EventObject, any, { value: any; context: any; }>, send: (event: SingleOrArray<Event<EventObject>>"
+            },
+            {
+              "type": "Event<EventObject>, payload?: EventData) => State<any, EventObject, any, { value: any; context: any; }>, service: Interpreter<any, any, EventObject, { value: any; context: any; }>) => Element"
+            },
+            {
+              "type": "Element[]"
+            }
+          ],
+          "optional": true,
+          "required": false
+        },
+        {
+          "name": "service",
+          "type": "Interpreter<any, any, EventObject, { value: any; context: any; }>",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "An XState service.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Interpreter<any, any, EventObject, { value: any; context: any; }>"
+            }
+          ],
+          "optional": false,
+          "required": true
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "ready",
+          "detail": "Interpreter<any, any, EventObject, { value: any; context: any; }>",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "interaction-machine",
+        "login-machine"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "interaction-machine": [
+          "xstate-service"
+        ],
+        "login-machine": [
+          "xstate-service"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/xtate-viz/xstate-viz.tsx",
+      "encapsulation": "none",
+      "tag": "xstate-viz",
+      "readme": "# xstate-viz\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},

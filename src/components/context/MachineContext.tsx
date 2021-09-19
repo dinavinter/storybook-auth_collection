@@ -5,6 +5,7 @@ const {Provider, Consumer} = createContext<MachineServiceContext>({});
 
 export declare type MachineServiceContext ={
   service?:Interpreter<any, any, any, any>;
+  login?:Interpreter<any, any, any, any>;
   name?:string;
 }
 

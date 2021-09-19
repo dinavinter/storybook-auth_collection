@@ -60,6 +60,17 @@
       "cssParts": []
     },
     {
+      "name": "gigya-login",
+      "path": "./src/components/gigya-login/gigya-login.tsx",
+      "description": "",
+      "attributes": [],
+      "events": [],
+      "methods": [],
+      "slots": [],
+      "cssProperties": [],
+      "cssParts": []
+    },
+    {
       "name": "gigya-screen",
       "path": "./src/components/gigya-screen/gigya-screen.tsx",
       "description": "",
@@ -154,8 +165,54 @@
       "cssParts": []
     },
     {
-      "name": "loading-machine",
+      "name": "interaction-machine",
+      "path": "./src/components/interaction-machine/interaction-machine.tsx",
+      "description": "",
+      "attributes": [
+        {
+          "name": "interaction",
+          "type": "string",
+          "description": "",
+          "defaultValue": "'None'",
+          "required": false
+        }
+      ],
+      "events": [
+        {
+          "name": "resolve",
+          "description": ""
+        }
+      ],
+      "methods": [],
+      "slots": [],
+      "cssProperties": [],
+      "cssParts": []
+    },
+    {
+      "name": "login-machine",
       "path": "./src/components/loading-machine/loading-machine.tsx",
+      "description": "",
+      "attributes": [],
+      "events": [],
+      "methods": [],
+      "slots": [],
+      "cssProperties": [],
+      "cssParts": []
+    },
+    {
+      "name": "machine-consumer",
+      "path": "./src/components/machine-context-provider/machine-context-provider.tsx",
+      "description": "",
+      "attributes": [],
+      "events": [],
+      "methods": [],
+      "slots": [],
+      "cssProperties": [],
+      "cssParts": []
+    },
+    {
+      "name": "machine-context-consumer",
+      "path": "./src/components/machine-context-consumer/machine-context-consumer.tsx",
       "description": "",
       "attributes": [],
       "events": [],
@@ -234,7 +291,12 @@
       "path": "./src/components/router-link/router-link.tsx",
       "description": "",
       "attributes": [],
-      "events": [],
+      "events": [
+        {
+          "name": "backgroundToggle",
+          "description": ""
+        }
+      ],
       "methods": [],
       "slots": [],
       "cssProperties": [],
@@ -243,6 +305,33 @@
     {
       "name": "stepper-machine",
       "path": "./src/stories/Stepper.tsx",
+      "description": "",
+      "attributes": [],
+      "events": [],
+      "methods": [],
+      "slots": [],
+      "cssProperties": [],
+      "cssParts": []
+    },
+    {
+      "name": "xstate-service",
+      "path": "./src/components/xstate-service/xstate-service.tsx",
+      "description": "",
+      "attributes": [],
+      "events": [
+        {
+          "name": "ready",
+          "description": ""
+        }
+      ],
+      "methods": [],
+      "slots": [],
+      "cssProperties": [],
+      "cssParts": []
+    },
+    {
+      "name": "xstate-viz",
+      "path": "./src/components/xtate-viz/xstate-viz.tsx",
       "description": "",
       "attributes": [],
       "events": [],

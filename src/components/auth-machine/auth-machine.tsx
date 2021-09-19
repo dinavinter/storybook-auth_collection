@@ -67,6 +67,7 @@ export class AuthMachine implements ComponentInterface {
   @State() state = authenticationMachine.initialState;
   @State() interaction;
   @State() interactionService: Interpreter<InteractionMachineContext, any, any, any>;
+  @State() loginService: Interpreter<InteractionMachineContext, any, any, any>;
   @State() authStorageState = authenticationMachine.initialState;
   @Prop() request: AuthRequest;
   @Prop() event: MessageEvent;
@@ -78,7 +79,7 @@ export class AuthMachine implements ComponentInterface {
     });
 
     this._service.onTransition((state) => {
-      const {authStorage, interactionMachine} = state.context;
+      const {authStorage, interactionMachine, loginMachine} = state.context;
       if (authStorage != null) { // @ts-ignore
         this.authStorageState = authStorage.state;
       }
@@ -88,7 +89,11 @@ export class AuthMachine implements ComponentInterface {
 
       }
 
+      if (loginMachine) {
+        this.loginService = loginMachine;
+        console.log(this.loginService);
 
+      }
 
     });
 
@@ -112,12 +117,15 @@ export class AuthMachine implements ComponentInterface {
     //
     // }
     const interactionProvider: MachineServiceContext = {
-      service:this.interactionService, name:'interaction'
+      service:this.interactionService, name:'interaction',
+      login:this.loginService
     };
     return (
 
       <Host>
         <button onClick={() => send({type: "AUTH", request: this.request})}>Send</button>
+        <button onClick={() => send({type: "LOGIN", request: this.request})}>Login</button>
+
 
         <Tunnel.Provider state={interactionProvider}  >
           <slot name={'interaction'}  />

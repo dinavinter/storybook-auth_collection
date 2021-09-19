@@ -1,6 +1,8 @@
-import {requestMachine} from "../../auth-machine/macines/request";
-import { assign} from "xstate";
-import {RequestMachineContext} from "../../../../machines/request";
+import {requestMachine, RequestMachineContext} from "../../auth-machine/macines/request";
+import {assign} from "xstate";
+import {RequestMachineEvents} from "../../../../machines/request";
+import {MachineState} from "../../xstate-service/xstate";
+import {loginMachine} from "../../loading-machine/machine";
 // import {actions, assign} from "xstate";
  // const {log} = actions;
 
@@ -8,15 +10,17 @@ import {RequestMachineContext} from "../../../../machines/request";
 
 export interface InteractionMachineContext extends RequestMachineContext<InteractionRequest, InteractionResponse>{
   interaction?: string
-}
+ }
+export type InteractionMachineState = MachineState<any>;
+
+ export type InteractionMachineEvent = RequestMachineEvents<InteractionRequest, InteractionResponse>
 
 export interface InteractionRequest {
   interaction?: string
   action?: () => Promise<void>;
 }
 export interface InteractionResponse {
-  response?: any;
-  errorMessage?: string;
+  [key: string]: any;
 }
 
 // const viewMachine() = createMachine({
@@ -54,10 +58,12 @@ export const interactionMachine = requestMachine<InteractionRequest>("Interactio
   //     };
   //   })
   // },
+
   actions: {
     onLoading: assign((context, _) => {
       return {
         interaction: context.request.interaction
+
       };
     }),
     onSuccess: assign((_) => {
@@ -72,8 +78,11 @@ export const interactionMachine = requestMachine<InteractionRequest>("Interactio
     }),
 
     },
+  services:{
+    loadService:loginMachine
+  }
 
-  services: {
-      loadInteraction:(c)=>  Promise.resolve(c.request)
-   },
-});
+
+}  );
+
+

@@ -7,6 +7,7 @@ import {
   InterpreterOptions
 } from 'xstate';
 import {h, FunctionalComponent, VNode} from '@stencil/core';
+import {FunctionalUtilities} from "@stencil/core/internal/stencil-public-runtime";
 
 export { State as MachineState };
 
@@ -70,7 +71,8 @@ export type ServiceProps<
   TSchema extends StateSchema = any,
   TEvent extends EventObject = EventObject
   > = {
-  callback: ServiceCallback
+  onReady?:   ( service:Interpreter<any>) => void;
+  callback?: ServiceCallback
   service: Interpreter<TContext, TSchema, TEvent>;
   renderer?: Renderer<TContext, TSchema, TEvent>;
 };
@@ -86,3 +88,16 @@ export const Service: FunctionalComponent<
   children?: VNode[]
 ) => <xstate-service service={service} renderer={renderer}>{...children}</xstate-service>;
 
+export type StateRender ={
+<TContext >(props: {
+  current: State<TContext>,
+  state: string
+}, children, utils: FunctionalUtilities): VNode| VNode[];
+
+}
+
+export const StateRender:StateRender = ({state , current  }, children, _)=>{
+
+     return <div>{current.matches(state) && children || <div  id={"current state not much " +state + " current: " + current.value} />}</div>
+
+}

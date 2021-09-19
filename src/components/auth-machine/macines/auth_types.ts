@@ -14,5 +14,7 @@ export declare type AuthResult = false | {
   idToken?: IdToken,
   accessToken?: AccessToken,
   user?: User
-  auth: 'auth'
+  auth: 'auth',
+  authenticated: boolean
+  error: string
 }

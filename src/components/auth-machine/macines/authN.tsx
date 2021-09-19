@@ -6,15 +6,13 @@ import {AuthRequest, AuthResult} from "./auth_types";
 // import {waitForLogin} from "../../store/gigya-script-store";
 import {sendParent} from "xstate";
 import loginDialogMachine from "./login";
-import {waitForLogin} from "../../store/gigya-script-store";
-import {Router} from "../../../router";
 
-async function navigateToAuthPage(
- ) {
-  Router.push('/_gs/login');
-  const {uid} = await waitForLogin();
-  localStorage.setItem('auth.state', JSON.stringify({user: {name: uid}}))
-}
+// async function navigateToAuthPage(
+//  ) {
+//   Router.push('/_gs/login');
+//   // const {uid} = await waitForLogin();
+//   // localStorage.setItem('auth.state', JSON.stringify({user: {name: uid}}))
+// }
 
 // declare global {
 //   namespace NodeJS {
@@ -27,7 +25,7 @@ export const createAuthNMachine = (r?: { provider: string }) => {
     loadService: loginDialogMachine
   },  'authNDialog').withConfig({
     actions:{
-      onLoading: sendParent({type:"INTERACTION"  , action: navigateToAuthPage, interaction: 'login'})
+      onLoading: sendParent({type:"LOGIN" , interaction: 'login'})
     }
   })
 

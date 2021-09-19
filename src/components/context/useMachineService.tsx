@@ -6,6 +6,7 @@ import {MachineState} from "./useMachineState";
 
 export declare type MachineServiceContext ={
   service?:Interpreter<any, any, any, any>;
+  login?:Interpreter<any, any, any, any>;
   name?:string;
 }
 

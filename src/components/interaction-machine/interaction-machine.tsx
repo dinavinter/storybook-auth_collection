@@ -1,8 +1,9 @@
-import {Component, Host, h, Prop} from '@stencil/core';
-import {Interpreter} from "xstate";
+import {Component, Host, h, Prop, Event} from '@stencil/core';
+import {Interpreter, ServiceConfig} from "xstate";
 
 import TunnelService from '../context/useMachineService';
-import {InteractionMachineContext} from "./machine"; // Import the Tunnel
+import {InteractionMachineContext, InteractionMachineEvent, InteractionResponse} from "./machine";
+import {MachineState} from "../xstate-service/xstate";
 
 function select(state) {
   return state.context && state.context.interaction;
@@ -15,27 +16,32 @@ function select(state) {
   shadow: true,
 })
 export class InteractionMachine {
-  // private _service = interpret(interactionMachine, {devTools: true});
   @Prop({mutable: true, reflect: true}) interaction: string = 'None';
+  @Prop({mutable: true}) state: MachineState<InteractionMachineContext, InteractionMachineEvent> ;
 
   @Prop({mutable: true}) service: Interpreter<InteractionMachineContext, any, any, any>;
 
+  @Event({eventName: "resolve"}) resolve: InteractionResponse;
+  @Prop() loadService?: ( service:ServiceConfig<any>) => void;
 
   private stateChange = (props) => {
-    const  {current}= props;
+    const {current} = props;
+    this.state= current;
     this.interaction = select(current);
-    console.log('stateChange' + this.interaction)
   };
 
 
 
   render() {
+
     return (
       <Host>
         <slot name={this.interaction}/>
+
         {this.service &&
-        <div> <xstate-service service={this.service} callback={this.stateChange}>
-        </xstate-service></div>}
+        <div>
+          <xstate-service service={this.service} callback={this.stateChange} />
+        </div>}
 
       </Host>
     );

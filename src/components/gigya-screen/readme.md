@@ -17,12 +17,16 @@
 
 ### Used by
 
+ - [gigya-login](../gigya-login)
  - [gigya-screen-router](../gigya-screen-router)
+ - [login-machine](../loading-machine)
 
 ### Graph
 ```mermaid
 graph TD;
+  gigya-login --> gigya-screen
   gigya-screen-router --> gigya-screen
+  login-machine --> gigya-screen
   style gigya-screen fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

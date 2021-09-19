@@ -18,7 +18,7 @@ function checkAuth(
     console.log(`#checkAuth init`);
     const auth = session();
     if (auth)
-      resolve(auth);
+      resolve({...auth, authenticated:true});
     else reject({error: 'not-authenticated'});
   });
 

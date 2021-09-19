@@ -1,6 +1,7 @@
 import { Config } from '@stencil/core';
 import {promises as fs} from "fs";
 import { JsonDocs } from '@stencil/core/internal';
+import nodePolyfills from 'rollup-plugin-node-polyfills';
 
 async function generateCustomElementsJson(docsData: JsonDocs) {
   const jsonData = {
@@ -58,6 +59,11 @@ async function generateCustomElementsJson(docsData: JsonDocs) {
 
 export const config: Config = {
   namespace: 'gigya-auth-machine',
+  rollupPlugins: {
+    after: [
+      nodePolyfills(),
+    ]
+  },
   outputTargets: [
     {
       type: 'dist',

@@ -2,8 +2,14 @@ import {createStore} from "@stencil/store";
 
 export declare type LoginDetails<TContext extends any = any> = {
   provider: string;
-  uid: string;
+  UID: string;
   context: TContext;
+  eventName: "login"
+  fullEventName: "login"
+  loginMode: "standard" | "reauth"
+  newUser: boolean
+  [key: string]: any;
+
 }
 
 export declare type GigyaSdk = {
@@ -63,7 +69,12 @@ onChange('gigya', gigya => {
   console.log(gigya)
 })
 
-export function onLogin(cb: (details: LoginDetails) => void) {
+
+export declare type LoginCallback = {
+  < TLoginDetails extends LoginDetails = LoginDetails>(details:TLoginDetails ): void;
+}
+
+export function onLogin(cb: LoginCallback) {
   onGigyaService(({gigya}) => {
     gigya.socialize.addEventHandlers({
       context: {str: 'congrats on your'}
@@ -72,14 +83,16 @@ export function onLogin(cb: (details: LoginDetails) => void) {
   })
 }
 
-export function waitForLogin(): Promise<LoginDetails> {
-  return new Promise((resolve) => {
+export async function waitForLogin(): Promise<LoginDetails> {
+  return await new Promise((resolve) => {
     onLogin(details => resolve(details))
-  })
+  });
+
 }
 
 function onGigyaService(cb: (gigya: GigyaSdk) => void) {
   function sdk(gigya) {
+
 
     return {
       gigya: gigya,
@@ -91,8 +104,9 @@ function onGigyaService(cb: (gigya: GigyaSdk) => void) {
       },
       showDebugUI: () => {
         gigya.showDebugUI()
-      }
+      },
 
+      // waitForLogin: waitForLogin()
     };
   }
 

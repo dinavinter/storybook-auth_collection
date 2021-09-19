@@ -1,4 +1,4 @@
-import { h, Component, Prop, State } from '@stencil/core';
+import {h, Component, Prop, State, Event, EventEmitter} from '@stencil/core';
 import { Interpreter } from 'xstate';
 import {Renderer, MachineState, ServiceCallback} from './xstate';
 
@@ -23,12 +23,13 @@ export class XStateService {
   @Prop() renderer?: Renderer<any>;
 
   @Prop() callback?: ServiceCallback;
+  @Event() ready?:EventEmitter<Interpreter<any>>;
 
 
   private stateChange = (state: MachineState<any>) => {
     if (state.changed) {
       this.current = state;
-      this.callback( {current: this.current, send:this.service.send, service:this.service})
+      this.callback &&  this.callback( {current: this.current, send:this.service.send, service:this.service})
     }
   };
 
@@ -37,6 +38,7 @@ export class XStateService {
   }
 
   componentDidLoad() {
+    this.ready && this.ready.emit(this.service);
     this.service.onTransition(this.stateChange);
 
   }
