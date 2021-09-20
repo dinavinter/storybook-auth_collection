@@ -1,4 +1,4 @@
-import {AuthService} from "./auth";
+import {AuthenticationService} from "./auth";
 
 export declare type IdToken = string | {
   raw: string;
@@ -17,7 +17,7 @@ export declare type User = {
   [key:string]: any;
 }
 export declare type AuthRequest = any& {
-  authService: AuthService
+  authService: AuthenticationService
 }
 
 export declare type AuthResult = false | {

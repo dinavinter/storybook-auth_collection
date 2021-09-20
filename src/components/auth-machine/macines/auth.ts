@@ -28,7 +28,7 @@ export type AuthMachineEvents =
   | { type: "REFRESH" }
 
 declare type AuthMachineContext = AuthResult & {[key:string] :any};
-export type AuthService =Interpreter<AuthMachineContext, AuthMachineSchema, AuthMachineEvents>
+export type AuthenticationService =Interpreter<AuthMachineContext, AuthMachineSchema, AuthMachineEvents>
 
 export const authMachine = Machine<AuthMachineContext, AuthMachineSchema, AuthMachineEvents>(
   {

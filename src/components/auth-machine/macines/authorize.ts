@@ -110,14 +110,13 @@
 //   }
 //
 // }
-import {authMachine} from "./auth";
+import {authMachine, AuthenticationService} from "./auth";
 // import {createMachine, send, actions} from "xstate";
 import {assign, createMachine, send, spawn, actions} from "xstate";
 import {RequestMachineEventTypes} from "./request";
 // import interactionDialogMachine from "./interaction";
 import {interactionMachine} from "../../interaction-machine/machine";
 // import {loginMachine} from "../../gigya-login/machine";
-import {AuthResult} from "./auth_types";
 import {loginMachine} from "./login";
 
 const {log} = actions;
@@ -128,20 +127,16 @@ const {log} = actions;
 export const loginService = loginMachine.initialState.context.loadService;
 export const interactionService = interactionMachine.initialState.context.loadService;
 export const authClientMachine = createMachine<{
-    authStorage: any,
-    authNMachine: null,
-    interactionMachine: any,
-    loginMachine: any,
-    auth: AuthResult
+    authenticationService: AuthenticationService,
+    interactionService: any,
+    loginService: any,
   }>({
       id: 'authClientMachine',
       initial: 'init',
       context: {
-        authStorage: null,
-        authNMachine: null,
-        interactionMachine: interactionMachine,
-        loginMachine: loginMachine,
-        auth: {}
+        authenticationService: null,
+        interactionService: interactionMachine,
+        loginService: loginMachine,
       },
 
 
@@ -160,7 +155,7 @@ export const authClientMachine = createMachine<{
       states: {
         init: {
           entry: assign({
-            authStorage: () => spawn(authMachine, {sync: true, name: `auth-machine`})
+            authenticationService: () => spawn(authMachine, {sync: true, name: `auth-machine`})
           }),
           after: {
             1: {
@@ -169,20 +164,18 @@ export const authClientMachine = createMachine<{
           }
 
         },
-        idle: {
-
-        },
+        idle: {},
 
         interaction: {
           entry: [log("interaction - event"),
             assign({
-              interactionMachine: () => spawn(interactionMachine, {sync: true, name: `interaction-machine`})
+              interactionService: () => spawn(interactionMachine, {sync: true, name: `interaction-machine`})
             }),
             send((_c, event) => ({...event, type: RequestMachineEventTypes.send}), {
-              to: (context) => context.interactionMachine
+              to: (context) => context.interactionService
             })],
           invoke: {
-            src: (c) => c.interactionMachine,
+            src: (c) => c.interactionService,
             onDone: "authentication",
             onError: "idle"
           }
@@ -191,7 +184,7 @@ export const authClientMachine = createMachine<{
         authentication: {
           entry: [log("authentication - entry")],
           invoke: {
-            src: "checkAuthService",
+            src: "checkAuthn",
             onDone: "authenticated",
             onError: "notAuthenticated"
 
@@ -207,14 +200,17 @@ export const authClientMachine = createMachine<{
         login: {
           entry: [log("login - entry"),
             assign({
-              loginMachine: () => spawn(loginMachine, {sync: true, name: `login-service`})
+              loginService: () => spawn(loginMachine, {sync: true, name: `login-service`})
             }),
-            send((context) => ({request: {authService: context.authStorage}, type: RequestMachineEventTypes.send}), {
+            send((context) => ({
+              request: {authService: context.authenticationService},
+              type: RequestMachineEventTypes.send
+            }), {
               to: 'login-service'
             })
           ],
           invoke: {
-            src: (c) => c.loginMachine,
+            src: (c) => c.loginService,
             id: 'login-service',
             onDone: 'authentication',
             onError: "notAuthenticated",
@@ -226,8 +222,8 @@ export const authClientMachine = createMachine<{
       }
     }, {
       services: {
-        checkAuthService: (context) => new Promise((reslove, reject) => {
-          context.authStorage.onTransition((state, _) => {
+        checkAuthn: (context) => new Promise((reslove, reject) => {
+          context.authenticationService.onTransition((state, _) => {
             if (state.matches("authorized")) {
               reslove(state.context)
             } else if (state.matches("unauthorized")) {
@@ -237,15 +233,7 @@ export const authClientMachine = createMachine<{
         })
       },
       actions:
-        {
-          setAuthResult: assign((_, event: any) => ({
-            auth: event.data && event.data.result,
-          })),
-          setAuthError:
-            assign((_, event: any) => ({
-              auth: {error: event.data && event.data.error},
-            })),
-        }
+        {}
       ,
 
     }
