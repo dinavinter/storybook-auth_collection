@@ -22,7 +22,7 @@ declare type AccessToken = string |{
 
 
 export const authStateModel = createModel({
-  idToken: {},
+  gigyaToken: {},
   accessToken: null as string,
   user: null as User,
 });
@@ -47,7 +47,7 @@ declare type AuthContext = | {
 }
 function invokeAuthRequest(authRequest:AuthRequest):Promise<AuthResult> {
   return new Promise((resolve, _) => {
-    resolve({idToken: "idToken", accessToken: "accessToken", user: authRequest.user})
+    resolve({gigyaToken: "idToken", accessToken: "accessToken", user: authRequest.user})
   })
 }
 const withAuthNService :RequestMachineConfigurator<AuthRequest, AuthResult> =(machine, services)=> {

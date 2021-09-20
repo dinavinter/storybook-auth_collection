@@ -12,7 +12,7 @@ export  function  createAuthNMachine(){
 
       context: {
         user: {},
-        idToken: null,
+        gigyaToken: null,
         accessToken: null,
       },
 
@@ -61,7 +61,7 @@ export  function  createAuthNMachine(){
               cond: 'hasPersistedTokens',
               actions: assign({
                 accessToken: ss.getItem('access_token'),
-                idToken: ss.getItem('id_token'),
+                gigyaToken: ss.getItem('id_token'),
                 user: {},
               }),
             },
@@ -84,7 +84,7 @@ export  function  createAuthNMachine(){
               cond: 'hasPersistedProfile',
               actions: assign({
                 accessToken: ss.getItem('access_token'),
-                idToken: ss.getItem('id_token'),
+                gigyaToken: ss.getItem('id_token'),
                 user: ss.getItem('user'),
               }),
             },
@@ -139,7 +139,7 @@ export  function  createAuthNMachine(){
           entry: log('cleaning - entry'),
           always: {
             target: 'anonymous',
-            actions: assign({ accessToken: null, idToken: null, user: {} }),
+            actions: assign({ accessToken: null, gigyaToken: null, user: {} }),
           },
 
           exit: log('cleaning - exit'),

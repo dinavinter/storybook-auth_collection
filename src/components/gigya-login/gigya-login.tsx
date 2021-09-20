@@ -1,9 +1,18 @@
 import {Component, Host, h, State, ComponentInterface} from '@stencil/core';
 import {loginMachine} from "./machine";
 // import {interpret} from "xstate";
-import {onLogin} from "../store/gigya-script-store";
-// import {StateRender} from "../xstate-service/xstate";
-import {loginService} from "../auth-machine/macines/authorize";
+import {gigya, onLogin} from "../store/gigya-script-store";
+import {loginService} from "../auth-machine/macines/login";
+ // import {StateRender} from "../xstate-service/xstate";
+
+// async function profile() {
+//   const account = await getAccount();
+//   return {
+//     name: account.profile.firstName
+//
+//   }
+// }
+
 
 @Component({
   tag: 'gigya-login',
@@ -30,17 +39,21 @@ export class GigyaLogin implements ComponentInterface {
     // this._service.onTransition(state => {
     //   this.state = state;
     // });
-    onLogin(details => {
+    onLogin(_ => {
       console.log('on login', this.state)
-      this.resolver.next({
-        type: 'RESOLVE', result: {
-            user: {
-              name: details.UID
-            },
-            authenticated: true
+      const {getAccount, getToken} = gigya;
 
-        }
-      });
+      loginService.onLogin(getAccount, getToken);
+
+      // this.resolver.next({
+      //   type: 'RESOLVE', result: {
+      //       user: {
+      //         name: details.UID
+      //       },
+      //       authenticated: true
+      //
+      //   }
+      // });
       // this.resolver.complete();
     });
 

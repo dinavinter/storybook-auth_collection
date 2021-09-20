@@ -110,7 +110,7 @@
 //   }
 //
 // }
-import {authStorageMachine} from "./auth";
+import {authMachine} from "./auth";
 // import {createMachine, send, actions} from "xstate";
 import {assign, createMachine, send, spawn, actions} from "xstate";
 import {RequestMachineEventTypes} from "./request";
@@ -124,141 +124,132 @@ const {log} = actions;
 
 
 // const authNMachine = createAuthNMachine();
-const authStorage = authStorageMachine();
 
 export const loginService = loginMachine.initialState.context.loadService;
 export const interactionService = interactionMachine.initialState.context.loadService;
 export const authClientMachine = createMachine<{
-  authStorage: any,
-  authNMachine: null,
-  interactionMachine: any,
-  loginMachine: any,
-  auth: AuthResult
-}>({
-    id: 'authClientMachine',
-    initial: 'idle',
-    context: {
-      authStorage: null,
-      authNMachine: null,
-      interactionMachine: interactionMachine,
-      loginMachine: loginMachine,
-      auth: {}
-    },
-
-    on: {
-      AUTH: {
-        target: 'authorizing',
-      },
-      INTERACTION: [
-        {
-          target: 'interaction',
-          actions: send((_c) => ({request: {interaction: 'login'}, type: "INTERACTION"}), {
-            to: 'interaction'
-          }),
-        }
-      ],
-      LOGIN: [
-        {
-          target: 'login',
-          // meta: {
-          //   interaction: 'login'
-          // }
-        }
-        //{
-        //       //   target: 'login',
-        //       // }
-      ]
-    },
-    states: {
-      idle: {
-        on: {
-          '': [
-            {target: "notAuthenticated", cond: 'notAuthenticated'},
-            {target: "authenticated", cond: 'authenticated'}
-          ]
-        }
+    authStorage: any,
+    authNMachine: null,
+    interactionMachine: any,
+    loginMachine: any,
+    auth: AuthResult
+  }>({
+      id: 'authClientMachine',
+      initial: 'init',
+      context: {
+        authStorage: null,
+        authNMachine: null,
+        interactionMachine: interactionMachine,
+        loginMachine: loginMachine,
+        auth: {}
       },
 
-      interaction: {
-        entry: [log("interaction - event"),
-          assign({
-            interactionMachine: () => spawn(interactionMachine, {sync: true, name: `interaction-machine`})
-          }),
-          send((_c, event) => ({...event, type: RequestMachineEventTypes.send}), {
-            to: (context) => context.interactionMachine
-          })],
-        invoke: {
-          src: (c) => c.interactionMachine,
-          onDone: "authorizing",
-          onError: "idle"
-        }
-      },
 
-      authorizing: {
-        entry: [log("authorizing - entry"),
-          assign({
-            authStorage: () => spawn(authStorage, {sync: true, name: `auth-storage`})
-          }),
-          send((_c, event) => ({...event, type: RequestMachineEventTypes.send}), {
-            to: (context) => context.authStorage
-          })],
-        invoke: {
-          src: (c) => c.authStorage,
-          onDone: {
-            target: "idle",
-            actions: [log("#authorizing on done "), "setAuthResult"]
-          },
-          onError: {
-            target: "idle",
-            actions: [log("#authorizing on error "), "setAuthError"]
+      on: {
+        AUTH: {
+          target: 'authentication',
+        },
+        LOGIN: [
+          {
+            target: 'login',
+
           }
-        }
 
+        ]
       },
-      authenticated: {
-        data: {
-          auth: (context, _) => context.auth,
-
-        }
-      },
-      login: {
-        entry: [log("login - entry"),
-          assign({
-            loginMachine: () => spawn(loginMachine, {sync: true, name: `login-service`})
+      states: {
+        init: {
+          entry: assign({
+            authStorage: () => spawn(authMachine, {sync: true, name: `auth-machine`})
           }),
-          send((_c) => ({request: {}, type: RequestMachineEventTypes.send}), {
-            to: 'login-service'
+          after: {
+            1: {
+              target: "authentication"
+            }
+          }
+
+        },
+        idle: {
+
+        },
+
+        interaction: {
+          entry: [log("interaction - event"),
+            assign({
+              interactionMachine: () => spawn(interactionMachine, {sync: true, name: `interaction-machine`})
+            }),
+            send((_c, event) => ({...event, type: RequestMachineEventTypes.send}), {
+              to: (context) => context.interactionMachine
+            })],
+          invoke: {
+            src: (c) => c.interactionMachine,
+            onDone: "authentication",
+            onError: "idle"
+          }
+        },
+
+        authentication: {
+          entry: [log("authentication - entry")],
+          invoke: {
+            src: "checkAuthService",
+            onDone: "authenticated",
+            onError: "notAuthenticated"
+
+          },
+
+        },
+        authenticated: {
+          data: {
+            auth: (context, _) => context.auth,
+
+          }
+        },
+        login: {
+          entry: [log("login - entry"),
+            assign({
+              loginMachine: () => spawn(loginMachine, {sync: true, name: `login-service`})
+            }),
+            send((context) => ({request: {authService: context.authStorage}, type: RequestMachineEventTypes.send}), {
+              to: 'login-service'
+            })
+          ],
+          invoke: {
+            src: (c) => c.loginMachine,
+            id: 'login-service',
+            onDone: 'authentication',
+            onError: "notAuthenticated",
+            autoForward: true
+          }
+
+        },
+        notAuthenticated: {}
+      }
+    }, {
+      services: {
+        checkAuthService: (context) => new Promise((reslove, reject) => {
+          context.authStorage.onTransition((state, _) => {
+            if (state.matches("authorized")) {
+              reslove(state.context)
+            } else if (state.matches("unauthorized")) {
+              reject(state.context.message)
+            }
           })
-        ],
-        invoke: {
-          src: (context) => context.loginMachine,
-          id: 'login-service',
-          onDone: {
-            target: "authorizing",
-            actions: [log("#login on done ")]
-          },
-          onError: {
-            target: "authorizing",
-            actions: [log("#login on error ")]
-          }
-        }
+        })
       },
-      notAuthenticated: {}
+      actions:
+        {
+          setAuthResult: assign((_, event: any) => ({
+            auth: event.data && event.data.result,
+          })),
+          setAuthError:
+            assign((_, event: any) => ({
+              auth: {error: event.data && event.data.error},
+            })),
+        }
+      ,
+
     }
-  }, {
-    actions: {
-      setAuthResult: assign((_, event: any) => ({
-        auth: event.data && event.data.result,
-      })),
-      setAuthError: assign((_, event: any) => ({
-        auth: {error: event.data && event.data.error},
-      })),
-    },
-    guards: {
-      authenticated: (context) =>
-         context.auth &&  context.auth.authenticated,
-      notAuthenticated: (context) =>
-       !context.auth || !context.auth.authenticated
-    },
-  }
-);
+  )
+;
+
+

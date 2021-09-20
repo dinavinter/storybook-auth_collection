@@ -22,6 +22,8 @@ export declare type GigyaSdk = {
   showDebugUI: () => void,
   // onLogin?: ({provider, uid, context}) => void
   // screenSet: ScreenSetController
+  getAccount(): Promise<any>,
+  getToken(): Promise<string>,
 }
 
 
@@ -38,6 +40,8 @@ const {state, onChange} = createStore<GigyaSdk>({
     this.gigya.showDebugUI()
   },
 
+  getAccount: () => state.gigya && getAccount(state.gigya)() || Promise.reject("no gigya"),
+  getToken: () => state.gigya && getJwt(state.gigya)()  || Promise.reject("no gigya")
 
 });
 
@@ -71,7 +75,7 @@ onChange('gigya', gigya => {
 
 
 export declare type LoginCallback = {
-  < TLoginDetails extends LoginDetails = LoginDetails>(details:TLoginDetails ): void;
+  <TLoginDetails extends LoginDetails = LoginDetails>(details: TLoginDetails): void;
 }
 
 export function onLogin(cb: LoginCallback) {
@@ -83,6 +87,7 @@ export function onLogin(cb: LoginCallback) {
   })
 }
 
+
 export async function waitForLogin(): Promise<LoginDetails> {
   return await new Promise((resolve) => {
     onLogin(details => resolve(details))
@@ -90,10 +95,40 @@ export async function waitForLogin(): Promise<LoginDetails> {
 
 }
 
+function getAccount(gigya) {
+  return () =>
+    new Promise((resolve, reject) => {
+      gigya.accounts.getAccountInfo({
+        callback: function (res) {
+          if (res.errorCode === 0) {
+            resolve(res)
+          } else {
+            reject(res)
+          }
+
+        }
+      })
+    });
+}
+
+function getJwt(gigya) {
+  return ():Promise<string> =>
+    new Promise((resolve, reject) => {
+      gigya.accounts.getJWT({
+        callback: function (res) {
+          if (res.errorCode === 0) {
+            resolve(res.id_token as string)
+          } else {
+            reject(res)
+          }
+
+        }
+      })
+    });
+}
+
 function onGigyaService(cb: (gigya: GigyaSdk) => void) {
   function sdk(gigya) {
-
-
     return {
       gigya: gigya,
       socialize: gigya.socialize,
@@ -106,8 +141,11 @@ function onGigyaService(cb: (gigya: GigyaSdk) => void) {
         gigya.showDebugUI()
       },
 
-      // waitForLogin: waitForLogin()
-    };
+      getAccount: getAccount(gigya),
+      getToken: getJwt(gigya)
+    }
+    // waitForLogin: waitForLogin()
+
   }
 
   if (state.gigya)
@@ -116,6 +154,7 @@ function onGigyaService(cb: (gigya: GigyaSdk) => void) {
     cb(sdk(gigya));
   })
 }
+
 
 // window.gigya.accounts.getAccountInfo({
 //   callback: function (res) {

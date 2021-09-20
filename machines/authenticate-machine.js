@@ -54,7 +54,7 @@ import {StateMachine} from "xstate/lib/types";
 import {createMachine, assign, spawn, sendParent, send} from 'xstate';
 
 export const authStateModel = createModel({
-    idToken: null,
+    gigyaToken: null,
     accessToken: null,
     user: null,
 
@@ -163,7 +163,7 @@ const authRequestMachine = authRequestModel.createMachine({
 function invokeAuthRequest(context) {
   const {authRequest} = context;
   return new Promise((resolve, reject) => {
-    resolve({idToken: "idToken", accessToken: "accessToken", user: authRequest.user})
+    resolve({gigyaToken: "idToken", accessToken: "accessToken", user: authRequest.user})
   })
   // return fetch(`https://www.reddit.com/r/${subreddit}.json`)
   //   .then((response) => response.json())

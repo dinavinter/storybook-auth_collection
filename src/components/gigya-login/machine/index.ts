@@ -4,7 +4,7 @@ import {MachineState} from "../../xstate-service/xstate";
 import {InteractionRequest} from "../../interaction-machine/machine";
 import {LoginCallback, LoginDetails} from "../../store/gigya-script-store";
 import {loginService} from "../../auth-machine/macines/authorize";
-// import {actions, assign} from "xstate";
+ // import {actions, assign} from "xstate";
 // const {log} = actions;
 
 
