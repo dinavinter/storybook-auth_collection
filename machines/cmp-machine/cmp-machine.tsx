@@ -50,6 +50,7 @@ export class CmpMachine {
       <Host>
         klaro.
         <slot></slot>
+
         <button onClick={_=> klaro.show(config, true)}>show manager</button>
         <button onClick={_=> {
           klaro.getManager(config).resetConsents();

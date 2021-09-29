@@ -143,14 +143,15 @@
   <!-- can be any valid media query https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries -->
   <div class="container">
     <section>
-      <auth-machine>
+
+      <auth-machine request="${request}" >
         <gigya-login slot="login" />
+        <div slot="authenticated" >Thank You!</div>
       </auth-machine>
+      <!--    <cmp-machine>
 
-      <cmp-machine>
-
-      </cmp-machine>
-      <!--    <auth-machine >-->
+        </cmp-machine>-->
+        <!--    <auth-machine >-->
       <!--&lt;!&ndash;        <div slot="login">&ndash;&gt;-->
       <!--&lt;!&ndash;        </div>&ndash;&gt;-->
       <!--      <login-machine slot="interaction">-->

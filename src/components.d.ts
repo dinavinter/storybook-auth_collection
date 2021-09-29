@@ -20,8 +20,6 @@ export namespace Components {
         "event": MessageEvent;
         "request": AuthRequest;
     }
-    interface CmpMachine {
-    }
     interface GigyaConfiguration {
         "apiKey": string;
         "domain": string;
@@ -124,12 +122,6 @@ declare global {
     var HTMLAuthMachineElement: {
         prototype: HTMLAuthMachineElement;
         new (): HTMLAuthMachineElement;
-    };
-    interface HTMLCmpMachineElement extends Components.CmpMachine, HTMLStencilElement {
-    }
-    var HTMLCmpMachineElement: {
-        prototype: HTMLCmpMachineElement;
-        new (): HTMLCmpMachineElement;
     };
     interface HTMLGigyaConfigurationElement extends Components.GigyaConfiguration, HTMLStencilElement {
     }
@@ -242,7 +234,6 @@ declare global {
     interface HTMLElementTagNameMap {
         "any-machine": HTMLAnyMachineElement;
         "auth-machine": HTMLAuthMachineElement;
-        "cmp-machine": HTMLCmpMachineElement;
         "gigya-configuration": HTMLGigyaConfigurationElement;
         "gigya-login": HTMLGigyaLoginElement;
         "gigya-screen": HTMLGigyaScreenElement;
@@ -270,8 +261,6 @@ declare namespace LocalJSX {
     interface AuthMachine {
         "event"?: MessageEvent;
         "request"?: AuthRequest;
-    }
-    interface CmpMachine {
     }
     interface GigyaConfiguration {
         "apiKey"?: string;
@@ -369,7 +358,6 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "any-machine": AnyMachine;
         "auth-machine": AuthMachine;
-        "cmp-machine": CmpMachine;
         "gigya-configuration": GigyaConfiguration;
         "gigya-login": GigyaLogin;
         "gigya-screen": GigyaScreen;
@@ -396,7 +384,6 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "any-machine": LocalJSX.AnyMachine & JSXBase.HTMLAttributes<HTMLAnyMachineElement>;
             "auth-machine": LocalJSX.AuthMachine & JSXBase.HTMLAttributes<HTMLAuthMachineElement>;
-            "cmp-machine": LocalJSX.CmpMachine & JSXBase.HTMLAttributes<HTMLCmpMachineElement>;
             "gigya-configuration": LocalJSX.GigyaConfiguration & JSXBase.HTMLAttributes<HTMLGigyaConfigurationElement>;
             "gigya-login": LocalJSX.GigyaLogin & JSXBase.HTMLAttributes<HTMLGigyaLoginElement>;
             "gigya-screen": LocalJSX.GigyaScreen & JSXBase.HTMLAttributes<HTMLGigyaScreenElement>;
