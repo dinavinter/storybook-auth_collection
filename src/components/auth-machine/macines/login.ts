@@ -1,6 +1,7 @@
 import {RejectEvent, requestMachine, SuccessEvent} from "./request";
 import {AccessToken, AuthRequest, User} from "./auth_types";
  import { Subject} from "rxjs";
+// import {sendParent} from "xstate";
  // import {loginService, setAuth} from "./auth";
 
 
@@ -15,6 +16,8 @@ export const loginService = {
 export const loginMachine = requestMachine<AuthRequest, { profile:()=> Promise<User>, token:()=> Promise<AccessToken>}>("login-service").withConfig({
 actions: {
   onSuccess: context => {
+    // context.request.authService.send({type:"LOGIN" ,...context.result});
+    // sendParent({type:"LOGIN" ,...context.result})
     context.request.authService.send({type:"LOGIN" ,...context.result});
 
   }

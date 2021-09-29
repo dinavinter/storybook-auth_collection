@@ -17,7 +17,6 @@
 
 ### Depends on
 
-- [xstate-service](../xstate-service)
 - [interaction-machine](../interaction-machine)
 - [gigya-screen](../gigya-screen)
 - context-consumer
@@ -25,7 +24,6 @@
 ### Graph
 ```mermaid
 graph TD;
-  login-machine --> xstate-service
   login-machine --> interaction-machine
   login-machine --> gigya-screen
   login-machine --> context-consumer

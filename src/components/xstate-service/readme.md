@@ -25,14 +25,14 @@
 
 ### Used by
 
+ - [auth-machine](../auth-machine)
  - [interaction-machine](../interaction-machine)
- - [login-machine](../loading-machine)
 
 ### Graph
 ```mermaid
 graph TD;
+  auth-machine --> xstate-service
   interaction-machine --> xstate-service
-  login-machine --> xstate-service
   style xstate-service fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

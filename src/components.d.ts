@@ -11,6 +11,7 @@ import { GigyaConfig } from "./components/store/gigya-config-store";
 import { MachineState, Renderer, ServiceCallback } from "./components/xstate-service/xstate";
 import { InteractionMachineContext, InteractionMachineEvent } from "./components/interaction-machine/machine";
 import { Interpreter, ServiceConfig } from "xstate";
+import { SubscriptionMachineContext } from "./components/auth-machine/macines/subscribtion";
 export namespace Components {
     interface AnyMachine {
         "machine": StateMachine<any, any, any, any>;
@@ -18,6 +19,8 @@ export namespace Components {
     interface AuthMachine {
         "event": MessageEvent;
         "request": AuthRequest;
+    }
+    interface CmpMachine {
     }
     interface GigyaConfiguration {
         "apiKey": string;
@@ -92,6 +95,9 @@ export namespace Components {
     }
     interface StepperMachine {
     }
+    interface SubscriptionMachine {
+        "context": SubscriptionMachineContext;
+    }
     interface XstateService {
         "callback"?: ServiceCallback;
         /**
@@ -118,6 +124,12 @@ declare global {
     var HTMLAuthMachineElement: {
         prototype: HTMLAuthMachineElement;
         new (): HTMLAuthMachineElement;
+    };
+    interface HTMLCmpMachineElement extends Components.CmpMachine, HTMLStencilElement {
+    }
+    var HTMLCmpMachineElement: {
+        prototype: HTMLCmpMachineElement;
+        new (): HTMLCmpMachineElement;
     };
     interface HTMLGigyaConfigurationElement extends Components.GigyaConfiguration, HTMLStencilElement {
     }
@@ -209,6 +221,12 @@ declare global {
         prototype: HTMLStepperMachineElement;
         new (): HTMLStepperMachineElement;
     };
+    interface HTMLSubscriptionMachineElement extends Components.SubscriptionMachine, HTMLStencilElement {
+    }
+    var HTMLSubscriptionMachineElement: {
+        prototype: HTMLSubscriptionMachineElement;
+        new (): HTMLSubscriptionMachineElement;
+    };
     interface HTMLXstateServiceElement extends Components.XstateService, HTMLStencilElement {
     }
     var HTMLXstateServiceElement: {
@@ -224,6 +242,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "any-machine": HTMLAnyMachineElement;
         "auth-machine": HTMLAuthMachineElement;
+        "cmp-machine": HTMLCmpMachineElement;
         "gigya-configuration": HTMLGigyaConfigurationElement;
         "gigya-login": HTMLGigyaLoginElement;
         "gigya-screen": HTMLGigyaScreenElement;
@@ -239,6 +258,7 @@ declare global {
         "pure-button": HTMLPureButtonElement;
         "router-link": HTMLRouterLinkElement;
         "stepper-machine": HTMLStepperMachineElement;
+        "subscription-machine": HTMLSubscriptionMachineElement;
         "xstate-service": HTMLXstateServiceElement;
         "xstate-viz": HTMLXstateVizElement;
     }
@@ -250,6 +270,8 @@ declare namespace LocalJSX {
     interface AuthMachine {
         "event"?: MessageEvent;
         "request"?: AuthRequest;
+    }
+    interface CmpMachine {
     }
     interface GigyaConfiguration {
         "apiKey"?: string;
@@ -327,6 +349,9 @@ declare namespace LocalJSX {
     }
     interface StepperMachine {
     }
+    interface SubscriptionMachine {
+        "context"?: SubscriptionMachineContext;
+    }
     interface XstateService {
         "callback"?: ServiceCallback;
         "onReady"?: (event: CustomEvent<Interpreter<any>>) => void;
@@ -344,6 +369,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "any-machine": AnyMachine;
         "auth-machine": AuthMachine;
+        "cmp-machine": CmpMachine;
         "gigya-configuration": GigyaConfiguration;
         "gigya-login": GigyaLogin;
         "gigya-screen": GigyaScreen;
@@ -359,6 +385,7 @@ declare namespace LocalJSX {
         "pure-button": PureButton;
         "router-link": RouterLink;
         "stepper-machine": StepperMachine;
+        "subscription-machine": SubscriptionMachine;
         "xstate-service": XstateService;
         "xstate-viz": XstateViz;
     }
@@ -369,6 +396,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "any-machine": LocalJSX.AnyMachine & JSXBase.HTMLAttributes<HTMLAnyMachineElement>;
             "auth-machine": LocalJSX.AuthMachine & JSXBase.HTMLAttributes<HTMLAuthMachineElement>;
+            "cmp-machine": LocalJSX.CmpMachine & JSXBase.HTMLAttributes<HTMLCmpMachineElement>;
             "gigya-configuration": LocalJSX.GigyaConfiguration & JSXBase.HTMLAttributes<HTMLGigyaConfigurationElement>;
             "gigya-login": LocalJSX.GigyaLogin & JSXBase.HTMLAttributes<HTMLGigyaLoginElement>;
             "gigya-screen": LocalJSX.GigyaScreen & JSXBase.HTMLAttributes<HTMLGigyaScreenElement>;
@@ -384,6 +412,7 @@ declare module "@stencil/core" {
             "pure-button": LocalJSX.PureButton & JSXBase.HTMLAttributes<HTMLPureButtonElement>;
             "router-link": LocalJSX.RouterLink & JSXBase.HTMLAttributes<HTMLRouterLinkElement>;
             "stepper-machine": LocalJSX.StepperMachine & JSXBase.HTMLAttributes<HTMLStepperMachineElement>;
+            "subscription-machine": LocalJSX.SubscriptionMachine & JSXBase.HTMLAttributes<HTMLSubscriptionMachineElement>;
             "xstate-service": LocalJSX.XstateService & JSXBase.HTMLAttributes<HTMLXstateServiceElement>;
             "xstate-viz": LocalJSX.XstateViz & JSXBase.HTMLAttributes<HTMLXstateVizElement>;
         }

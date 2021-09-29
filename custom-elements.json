@@ -314,6 +314,17 @@
       "cssParts": []
     },
     {
+      "name": "subscription-machine",
+      "path": "./src/components/subscription-machine/subscription-machine.tsx",
+      "description": "",
+      "attributes": [],
+      "events": [],
+      "methods": [],
+      "slots": [],
+      "cssProperties": [],
+      "cssParts": []
+    },
+    {
       "name": "xstate-service",
       "path": "./src/components/xstate-service/xstate-service.tsx",
       "description": "",

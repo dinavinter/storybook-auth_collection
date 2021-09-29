@@ -155,7 +155,7 @@ export const authClientMachine = createMachine<{
       states: {
         init: {
           entry: assign({
-            authenticationService: () => spawn(authMachine, {sync: true, name: `auth-machine`})
+            authenticationService: () => spawn(authMachine, {sync: true, name: `authentication-service`})
           }),
           after: {
             1: {
@@ -210,7 +210,7 @@ export const authClientMachine = createMachine<{
             })
           ],
           invoke: {
-            src: (c) => c.loginService,
+            src: 'loginService',
             id: 'login-service',
             onDone: 'authentication',
             onError: "notAuthenticated",
@@ -222,6 +222,7 @@ export const authClientMachine = createMachine<{
       }
     }, {
       services: {
+        loginService: (c) => c.loginService,
         checkAuthn: (context) => new Promise((reslove, reject) => {
           context.authenticationService.onTransition((state, _) => {
             if (state.matches("authorized")) {
