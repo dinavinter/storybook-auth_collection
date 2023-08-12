@@ -8,6 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { StateMachine } from "xstate/lib/types";
 import { AuthRequest } from "./components/auth-machine/macines/auth_types";
 import { GigyaConfig } from "./components/store/gigya-config-store";
+import { LoginService } from "./components/gigya-login/machine";
 import { MachineState, Renderer, ServiceCallback } from "./components/xstate-service/xstate";
 import { InteractionMachineContext, InteractionMachineEvent } from "./components/interaction-machine/machine";
 import { Interpreter, ServiceConfig } from "xstate";
@@ -25,10 +26,17 @@ export namespace Components {
         "domain": string;
     }
     interface GigyaLogin {
+        "login": LoginService;
+        "screen_set": string;
+        "start_screen": string;
+    }
+    interface GigyaReauth {
     }
     interface GigyaScreen {
         "screen_set": string;
         "start_screen": string;
+    }
+    interface GigyaScreenContainer {
     }
     interface GigyaScreenPopover {
     }
@@ -135,11 +143,23 @@ declare global {
         prototype: HTMLGigyaLoginElement;
         new (): HTMLGigyaLoginElement;
     };
+    interface HTMLGigyaReauthElement extends Components.GigyaReauth, HTMLStencilElement {
+    }
+    var HTMLGigyaReauthElement: {
+        prototype: HTMLGigyaReauthElement;
+        new (): HTMLGigyaReauthElement;
+    };
     interface HTMLGigyaScreenElement extends Components.GigyaScreen, HTMLStencilElement {
     }
     var HTMLGigyaScreenElement: {
         prototype: HTMLGigyaScreenElement;
         new (): HTMLGigyaScreenElement;
+    };
+    interface HTMLGigyaScreenContainerElement extends Components.GigyaScreenContainer, HTMLStencilElement {
+    }
+    var HTMLGigyaScreenContainerElement: {
+        prototype: HTMLGigyaScreenContainerElement;
+        new (): HTMLGigyaScreenContainerElement;
     };
     interface HTMLGigyaScreenPopoverElement extends Components.GigyaScreenPopover, HTMLStencilElement {
     }
@@ -236,7 +256,9 @@ declare global {
         "auth-machine": HTMLAuthMachineElement;
         "gigya-configuration": HTMLGigyaConfigurationElement;
         "gigya-login": HTMLGigyaLoginElement;
+        "gigya-reauth": HTMLGigyaReauthElement;
         "gigya-screen": HTMLGigyaScreenElement;
+        "gigya-screen-container": HTMLGigyaScreenContainerElement;
         "gigya-screen-popover": HTMLGigyaScreenPopoverElement;
         "gigya-screen-router": HTMLGigyaScreenRouterElement;
         "gigya-sdk-store": HTMLGigyaSdkStoreElement;
@@ -268,10 +290,17 @@ declare namespace LocalJSX {
         "onApplied"?: (event: CustomEvent<GigyaConfig>) => void;
     }
     interface GigyaLogin {
+        "login"?: LoginService;
+        "screen_set"?: string;
+        "start_screen"?: string;
+    }
+    interface GigyaReauth {
     }
     interface GigyaScreen {
         "screen_set"?: string;
         "start_screen"?: string;
+    }
+    interface GigyaScreenContainer {
     }
     interface GigyaScreenPopover {
     }
@@ -360,7 +389,9 @@ declare namespace LocalJSX {
         "auth-machine": AuthMachine;
         "gigya-configuration": GigyaConfiguration;
         "gigya-login": GigyaLogin;
+        "gigya-reauth": GigyaReauth;
         "gigya-screen": GigyaScreen;
+        "gigya-screen-container": GigyaScreenContainer;
         "gigya-screen-popover": GigyaScreenPopover;
         "gigya-screen-router": GigyaScreenRouter;
         "gigya-sdk-store": GigyaSdkStore;
@@ -386,7 +417,9 @@ declare module "@stencil/core" {
             "auth-machine": LocalJSX.AuthMachine & JSXBase.HTMLAttributes<HTMLAuthMachineElement>;
             "gigya-configuration": LocalJSX.GigyaConfiguration & JSXBase.HTMLAttributes<HTMLGigyaConfigurationElement>;
             "gigya-login": LocalJSX.GigyaLogin & JSXBase.HTMLAttributes<HTMLGigyaLoginElement>;
+            "gigya-reauth": LocalJSX.GigyaReauth & JSXBase.HTMLAttributes<HTMLGigyaReauthElement>;
             "gigya-screen": LocalJSX.GigyaScreen & JSXBase.HTMLAttributes<HTMLGigyaScreenElement>;
+            "gigya-screen-container": LocalJSX.GigyaScreenContainer & JSXBase.HTMLAttributes<HTMLGigyaScreenContainerElement>;
             "gigya-screen-popover": LocalJSX.GigyaScreenPopover & JSXBase.HTMLAttributes<HTMLGigyaScreenPopoverElement>;
             "gigya-screen-router": LocalJSX.GigyaScreenRouter & JSXBase.HTMLAttributes<HTMLGigyaScreenRouterElement>;
             "gigya-sdk-store": LocalJSX.GigyaSdkStore & JSXBase.HTMLAttributes<HTMLGigyaSdkStoreElement>;

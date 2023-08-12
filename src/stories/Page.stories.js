@@ -9,10 +9,13 @@ const Template = (args) => Page(args);
 
 export const LoggedIn = Template.bind({});
 LoggedIn.args = {
+  title: 'hello there',
+  user: {},
   ...HeaderStories.LoggedIn.args,
 };
 
 export const LoggedOut = Template.bind({});
 LoggedOut.args = {
+  title: 'please login',
   ...HeaderStories.LoggedOut.args,
 };

@@ -41,7 +41,7 @@ const {state, onChange} = createStore<GigyaSdk>({
   },
 
   getAccount: () => state.gigya && getAccount(state.gigya)() || Promise.reject("no gigya"),
-  getToken: () => state.gigya && getJwt(state.gigya)()  || Promise.reject("no gigya")
+  getToken: () => state.gigya && getJwt(state.gigya)() || Promise.reject("no gigya")
 
 });
 
@@ -87,6 +87,14 @@ export function onLogin(cb: LoginCallback) {
   })
 }
 
+export function useShowScreenSet() {
+  return (args: any) => {
+    onGigyaService(({gigya}) => {
+      gigya.accounts.showScreenSet(args)
+    })
+  }
+}
+
 
 export async function waitForLogin(): Promise<LoginDetails> {
   return await new Promise((resolve) => {
@@ -112,7 +120,7 @@ function getAccount(gigya) {
 }
 
 function getJwt(gigya) {
-  return ():Promise<string> =>
+  return (): Promise<string> =>
     new Promise((resolve, reject) => {
       gigya.accounts.getJWT({
         callback: function (res) {

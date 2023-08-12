@@ -19,7 +19,12 @@ export default {
   }
  };
 
- const Template  = ({request}) => html`<auth-machine request="${request}" ></auth-machine> `;
+ const Template  = ({request}) => html`<auth-machine request="${request}" >
+
+   <gigya-login slot="login" />
+   <div slot="authenticated" ><span>Thank You!</span></div>
+   <div slot="notAuthenticated" ><span>Please Login</span></div>
+ </auth-machine> `;
 // export const Screen = (args) =>`<gigya-screen ${{...args}} ></gigya-screen>`;
 
 export const Default = Template.bind({});

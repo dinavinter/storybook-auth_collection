@@ -4,6 +4,9 @@ import {MachineState} from "../../xstate-service/xstate";
 import {InteractionRequest} from "../../interaction-machine/machine";
 import {LoginCallback, LoginDetails} from "../../store/gigya-script-store";
 import {loginService} from "../../auth-machine/macines/authorize";
+import {Interpreter} from "xstate";
+import {StateSchema} from "xstate/lib/types";
+import {GigyaScreenContext, ShowScreenEvents} from "../../gigya-screen-container/machine";
  // import {actions, assign} from "xstate";
 // const {log} = actions;
 
@@ -16,7 +19,7 @@ export interface GigyaLoginContext extends RequestMachineContext<LoginRequest, G
 
 export type GigyaLoginState = MachineState<any>;
 
-export type InteractionMachineEvent = RequestMachineEvents<InteractionRequest, GigyaLoginResponse>
+export type InteractionMachineEvent = RequestMachineEvents<LoginRequest, GigyaLoginResponse>
 
 declare type LoginInteraction = 'gigya-login';
 
@@ -31,6 +34,9 @@ export interface GigyaLoginResponse extends LoginDetails {
 
 }
 
+export declare interface LoginService extends Interpreter<GigyaScreenContext,StateSchema, ShowScreenEvents> {
+
+}
 
 export const loginMachine = requestMachine<LoginRequest, GigyaLoginResponse>("gigya-login").withConfig({
 

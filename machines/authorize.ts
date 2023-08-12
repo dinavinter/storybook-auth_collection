@@ -47,7 +47,7 @@ declare type AuthContext = | {
 }
 function invokeAuthRequest(authRequest:AuthRequest):Promise<AuthResult> {
   return new Promise((resolve, _) => {
-    resolve({gigyaToken: "idToken", accessToken: "accessToken", user: authRequest.user})
+    resolve({idToken: "idToken", accessToken: "accessToken", user: authRequest.user})
   })
 }
 const withAuthNService :RequestMachineConfigurator<AuthRequest, AuthResult> =(machine, services)=> {

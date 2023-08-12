@@ -148,8 +148,12 @@ export const authClientMachine = createMachine<{
           {
             target: 'login',
 
-          }
+          }],
+        REAUTH: [
+          {
+            target: 'reauth',
 
+          }
         ]
       },
       states: {
@@ -195,6 +199,16 @@ export const authClientMachine = createMachine<{
           data: {
             auth: (context, _) => context.auth,
 
+          },
+          on: {
+
+            LOGIN: [
+              {
+                target: 'reauth',
+
+              }
+
+            ]
           }
         },
         login: {
@@ -218,6 +232,28 @@ export const authClientMachine = createMachine<{
           }
 
         },
+        reauth: {
+          entry: [log("reauth - entry"),
+            assign({
+              loginService: () => spawn(loginMachine, {sync: true, name: `login-service`})
+            }),
+            send((context) => ({
+              request: {authService: context.authenticationService},
+              type: RequestMachineEventTypes.send
+            }), {
+              to: 'login-service'
+            })
+          ],
+          invoke: {
+            src: 'loginService',
+            id: 'login-service',
+            onDone: 'authentication',
+            onError: "notAuthenticated",
+            autoForward: true
+          }
+
+        },
+
         notAuthenticated: {}
       }
     }, {

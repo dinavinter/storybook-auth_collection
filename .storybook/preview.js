@@ -1,5 +1,5 @@
 import {withGigyaProvider} from "../src/providers/gigya/configStore";
-import {defineCustomElements} from '../dist/esm/loader';
+import {defineCustomElements} from '../loader';
 
 defineCustomElements();
 

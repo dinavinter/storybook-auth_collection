@@ -3,10 +3,11 @@ import { h} from '@stencil/core';
 import { createProviderConsumer } from '@stencil/state-tunnel';
 import {Interpreter} from "xstate";
 import {MachineState} from "./useMachineState";
+import {LoginService} from "../gigya-login/machine";
 
 export declare type MachineServiceContext ={
   service?:Interpreter<any, any, any, any>;
-  login?:Interpreter<any, any, any, any>;
+  login?:LoginService;
   name?:string;
 }
 

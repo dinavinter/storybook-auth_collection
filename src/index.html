@@ -145,8 +145,14 @@
     <section>
 
       <auth-machine request="${request}" >
-        <gigya-login slot="login" />
+        <div></div>
+        <gigya-login slot="login"></gigya-login>
+<!--        <gigya-reauth slot="reauth"></gigya-reauth>-->
+        <gigya-login slot="reauth" screen_set="Default-ReAuthentication" start_screen="gigya-reauthentication-screen"></gigya-login>
+
+        <!--        <gigya-screen slot="reauth" screen_set="Default-ReAuthentication"  start_screen="gigya-reauthentication-screen"></gigya-screen>-->
         <div slot="authenticated" >Thank You!</div>
+        <gigya-screen-container slot="interaction" ></gigya-screen-container>
       </auth-machine>
       <!--    <cmp-machine>
 

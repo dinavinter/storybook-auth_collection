@@ -3,9 +3,9 @@ import {assign, send, actions, createMachine} from 'xstate';
 // import {StateMachine} from "xstate/es";
 const {log} = actions;
 
-
+export type SendRequestEvent<TRequest>={ type: 'FETCH', request: TRequest };
 export type RequestMachineEvents<TRequest, TResult> =
-  | { type: 'FETCH', request: TRequest }
+  |  SendRequestEvent<TRequest>
   | { type: 'RESOLVE'; result: TResult }
   | { type: 'REJECT'; error: any }
   | RequestMachineFinalEvents<TRequest, TResult>;
@@ -80,7 +80,7 @@ export type RequestMachineConfigurator<TRequest, TResult, TServices extends Serv
 
 export declare type  MachineService<TContext, TEvent extends EventObject> =
   ServiceConfig<TContext, TEvent>;
-// & { id: string };
+// & { id: string };00-=
 
 // type ServiceId<Str extends string> = { id: `#service-${Str}` }
 export declare type LoaderPromise<TRequest, TResult> = (request: TRequest) => PromiseLike<TResult>

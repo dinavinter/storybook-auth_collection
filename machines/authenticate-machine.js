@@ -253,18 +253,17 @@ const createSubredditMachine = (request) => {
     id: 'auth',
     initial: 'idle',
     context: {
-      authRequestModel.initAuthMachine(),
-      authNMachine: null
+      context: {...authStateModel.initialContext }
     },
+
     states: {
       idle: {
         entry: assign({
-          authNMachine: (_, _e) => spawn(authRequestMachine, {sync: true})
+          authNMachine: (_, _e) => spawn(createSubredditMachine(e.request), {sync: true})
         }),
         on: {
           'AUTHORIZATION.REQUEST': {
-            actions: assign()
-            actions: send({type: 'REQUEST'}, {to: (context) => context.requestMachine})
+             actions: send({type: 'REQUEST'}, {to: (context) => context.authNMachine})
           },
           'AUTHORIZATION.FAILED': {target: 'idle'}
         }
@@ -274,30 +273,7 @@ const createSubredditMachine = (request) => {
   });
 
 
-  authModel.createMachine({
-    id: 'auth',
-    initial: 'authenticating',
-    context: authModel.initialContext,
-    states: {
-      check: {
-
-        on: {
-          authenticate: {
-            invoke: {
-              id: 'authChecker',
-              src: 'authChecker',
-              onDone: {target: 'loading', actions: 'setAuth'},
-              onError: {target: 'signedOut'}
-            },
-
-          }
-        }
-      }
-    }
-
-
-  })
-  const config = {
+   const config = {
     id: 'auth',
     // we want to start by checking if
     // user is logged in when page loads
@@ -385,6 +361,8 @@ const createSubredditMachine = (request) => {
       }
     }
   };
+
+
 
   export const initAuthMachine = services => {
     // define XState actions so that we can

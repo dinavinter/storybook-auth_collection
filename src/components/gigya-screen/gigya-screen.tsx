@@ -1,6 +1,6 @@
 import {Component, h, Prop} from '@stencil/core';
 // import {useGigyaSdk} from '../store/gigya-script-store'
-import {useGigya} from "../store/gigya-config-store";
+import {useScreenSet} from "../gigya-screen-container/machine/store";
 
 @Component({
   tag: 'gigya-screen',
@@ -15,11 +15,12 @@ export class GigyaScreen {
 
   async componentDidLoad() {
 
-    const {showScreenSet} = await useGigya();
+    // const {showScreenSet} = await useGigya();
+    const {showScreenSet} = useScreenSet();
+
     showScreenSet({
       screenSet: this.screen_set,
-      startScreen: this.start_screen,
-      containerID: this.container
+      startScreen: this.start_screen
     });
 
   }
@@ -28,8 +29,8 @@ export class GigyaScreen {
   render() {
     console.log(`Screen Page ${this.screen_set}`)
     return (
+
       <div>
-        <div id={this.container}/>
       </div>
     )
 
